@@ -1,0 +1,15 @@
+# MetaClean
+> Remove metadata from photos, PDFs, and text files. Free, private, client-side.
+
+## Tools
+- Photo Metadata Remover: Remove EXIF, GPS, camera info from photos
+- PDF Metadata Remover: Remove author, title, keywords from PDFs
+- Text File Cleaner: Remove BOM, hidden Unicode from text files
+- EXIF Viewer: Inspect all metadata in photos
+- GPS Remover: Remove location data from photos
+- Social Media Cleaner: Clean photos before posting
+- Batch Remover: Clean multiple files at once
+- Privacy Score: Calculate privacy risk score
+
+## Privacy
+All processing happens in the browser. Files never leave your device.
