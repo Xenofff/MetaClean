@@ -72,7 +72,7 @@ export default function AboutPage() {
 
       {/* Hero */}
       <section className="bg-white">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           <div className="text-center">
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground">
               About <span className="text-primary">MetaClean</span>
@@ -86,20 +86,20 @@ export default function AboutPage() {
       </section>
 
       {/* Mission */}
-      <section className="py-16 bg-muted/30">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-foreground">Our Mission</h2>
-          <p className="mt-4 text-muted-foreground">
+      <section className="py-20 bg-muted/30">
+        <div className="about-content mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <h2>Our Mission</h2>
+          <p>
             Every photo you take, every document you create, every file you share contains hidden data
             about you. GPS coordinates that reveal where you live. Device information that identifies your
             phone. Author names embedded in PDFs. Most people have no idea this metadata exists.
           </p>
-          <p className="mt-4 text-muted-foreground">
+          <p>
             MetaClean was built to solve this problem with a simple principle: <strong>your files should
             never leave your device</strong>. While other tools require uploading your photos to remote servers,
             we process everything directly in your browser. No uploads. No servers. No trust required.
           </p>
-          <p className="mt-4 text-muted-foreground">
+          <p>
             Privacy tools should be free. Metadata removal is not a luxury — it&apos;s a basic digital hygiene
             practice. That&apos;s why MetaClean will always be free to use, with no usage limits or hidden paywalls.
           </p>
@@ -107,10 +107,10 @@ export default function AboutPage() {
       </section>
 
       {/* How Client-Side Processing Works */}
-      <section className="py-16">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-foreground">How Client-Side Processing Works</h2>
-          <p className="mt-4 text-muted-foreground">
+      <section className="py-20">
+        <div className="about-content mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <h2>How Client-Side Processing Works</h2>
+          <p>
             When you use MetaClean, your files are processed entirely within your web browser. Here&apos;s how:
           </p>
 
@@ -146,8 +146,8 @@ export default function AboutPage() {
                   {item.step}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground">{item.title}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
+                  <h3>{item.title}</h3>
+                  <p className="mt-1">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -164,8 +164,8 @@ export default function AboutPage() {
       </section>
 
       {/* Trust Badges */}
-      <section className="py-16 bg-muted/30">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <section className="py-20 bg-muted/30">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold text-foreground text-center mb-10">Trust & Transparency</h2>
           <div className="grid gap-6 sm:grid-cols-2">
             {trustBadges.map((badge, index) => (
@@ -185,15 +185,15 @@ export default function AboutPage() {
       </section>
 
       {/* Team */}
-      <section className="py-16">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-foreground">Who We Are</h2>
-          <p className="mt-4 text-muted-foreground">
+      <section className="py-20">
+        <div className="about-content mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <h2>Who We Are</h2>
+          <p>
             MetaClean is built by a small team of privacy-conscious developers who believe the web should be
             a safer place. We saw how easily metadata exposes personal information and decided to build the
             tool we wished existed — one that puts privacy first without compromising on usability.
           </p>
-          <p className="mt-4 text-muted-foreground">
+          <p>
             We&apos;re not a large corporation. We&apos;re developers who care about digital privacy and want to
             make these tools available to everyone, regardless of technical skill or budget.
           </p>
@@ -201,8 +201,8 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-primary">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+      <section className="py-20 bg-primary">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-white">Try MetaClean Today</h2>
           <p className="mt-4 text-lg text-white/80">
             Remove metadata from your files in seconds. No signup required.
