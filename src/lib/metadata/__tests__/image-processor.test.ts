@@ -160,7 +160,7 @@ describe("image-processor — pure functions", () => {
   });
 
   describe("verifyMetadataCleaned", () => {
-    it("should verify complete cleanup", () => {
+    it("should verify complete cleanup (zero fields remaining)", () => {
       const before: ImageMetadata = {
         GPSLatitude: 40.7128,
         GPSLongitude: -74.006,
@@ -179,7 +179,21 @@ describe("image-processor — pure functions", () => {
       assert.ok(result.details.some((d) => d.includes("Software")));
     });
 
-    it("should detect incomplete cleanup", () => {
+    it("should fail verification if ANY metadata remains", () => {
+      const before: ImageMetadata = {
+        GPSLatitude: 40.7128,
+        Make: "Canon",
+      };
+      const after: ImageMetadata = {
+        Software: "Lightroom", // Even software remaining = not clean
+      };
+
+      const result = verifyMetadataCleaned(before, after);
+      assert.equal(result.verifiedClean, false);
+      assert.ok(result.details.some((d) => d.includes("WARNING")));
+    });
+
+    it("should fail verification if GPS remains", () => {
       const before: ImageMetadata = {
         GPSLatitude: 40.7128,
         Make: "Canon",
@@ -216,7 +230,7 @@ describe("image-processor — pure functions", () => {
       assert.ok(result.removedFields.includes("DateTimeOriginal"));
     });
 
-    it("should report before/after state correctly", () => {
+    it("should report before state correctly", () => {
       const before: ImageMetadata = {
         GPSLatitude: 40.7128,
         Make: "Canon",
@@ -224,9 +238,7 @@ describe("image-processor — pure functions", () => {
         Software: "Lightroom",
         Author: "Jane",
       };
-      const after: ImageMetadata = {
-        Software: "Lightroom",
-      };
+      const after: ImageMetadata = {};
 
       const result = verifyMetadataCleaned(before, after);
       assert.equal(result.before.hasGPS, true);
@@ -234,12 +246,85 @@ describe("image-processor — pure functions", () => {
       assert.equal(result.before.hasTimestamp, true);
       assert.equal(result.before.hasSoftware, true);
       assert.equal(result.before.hasAuthor, true);
+    });
 
+    it("should report after state correctly (all false when clean)", () => {
+      const before: ImageMetadata = {
+        GPSLatitude: 40.7128,
+        Make: "Canon",
+        DateTimeOriginal: "2024:01:15",
+        Software: "Lightroom",
+        Author: "Jane",
+      };
+      const after: ImageMetadata = {};
+
+      const result = verifyMetadataCleaned(before, after);
       assert.equal(result.after.hasGPS, false);
       assert.equal(result.after.hasDevice, false);
       assert.equal(result.after.hasTimestamp, false);
-      assert.equal(result.after.hasSoftware, true); // software not removed
+      assert.equal(result.after.hasSoftware, false);
       assert.equal(result.after.hasAuthor, false);
+      assert.equal(result.after.metadataCount, 0);
+    });
+
+    it("should flag Make as remaining if not removed", () => {
+      const before: ImageMetadata = { Make: "Apple", Model: "iPhone 14 Pro" };
+      const after: ImageMetadata = { Make: "Apple" }; // Make not removed
+
+      const result = verifyMetadataCleaned(before, after);
+      assert.equal(result.verifiedClean, false);
+      assert.ok(result.after.hasDevice, "Device data should be detected as remaining");
+    });
+
+    it("should flag EXIF fields as remaining if not removed", () => {
+      const before: ImageMetadata = {
+        ExposureTime: 0.005,
+        FNumber: 1.8,
+        ISOSpeedRatings: 100,
+        FocalLength: 26,
+      };
+      const after: ImageMetadata = {
+        ExposureTime: 0.005,
+        FNumber: 1.8,
+      };
+
+      const result = verifyMetadataCleaned(before, after);
+      assert.equal(result.verifiedClean, false);
+      assert.equal(result.after.metadataCount, 2);
+    });
+
+    it("should handle iPhone-like metadata (many fields → 0)", () => {
+      const before: ImageMetadata = {
+        Make: "Apple",
+        Model: "iPhone 14 Pro Max",
+        Software: "16.1",
+        DateTimeOriginal: "2024-01-15T14:30:00Z",
+        GPSLatitude: 40.7128,
+        GPSLongitude: -74.006,
+        ExposureTime: 0.005,
+        FNumber: 1.78,
+        ISOSpeedRatings: 64,
+        FocalLength: 6.86,
+        LensModel: "iPhone 14 Pro Max back triple camera 6.86mm f/1.78",
+        LensMake: "Apple",
+        BodySerialNumber: "abc123",
+        HostComputer: "Macintosh",
+        ProfileDescription: "Display P3",
+        Copyright: "Apple Inc.",
+        Artist: "John Doe",
+        UserComment: "My photo",
+        ImageDescription: "A beautiful sunset",
+        ColorSpace: 1,
+        PixelXDimension: 4032,
+        PixelYDimension: 3024,
+      };
+      const after: ImageMetadata = {};
+
+      const result = verifyMetadataCleaned(before, after);
+      assert.equal(result.verifiedClean, true);
+      assert.equal(result.before.metadataCount, 22);
+      assert.equal(result.after.metadataCount, 0);
+      assert.equal(result.removedFields.length, 22);
     });
   });
 });

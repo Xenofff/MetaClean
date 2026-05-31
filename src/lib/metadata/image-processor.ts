@@ -40,251 +40,153 @@ export interface VerificationResult {
   details: string[];
 }
 
-// --- Extraction ---
+// ============================================================
+// EXTRACTION — read metadata from original file (for display)
+// ============================================================
 
 export async function extractImageMetadata(file: File): Promise<ImageMetadata> {
+  const buffer = await file.arrayBuffer();
+  const uint8Array = new Uint8Array(buffer);
+  try {
+    const exifr = await import("exifr");
+    const result = await exifr.default.parse(uint8Array, true);
+    return result || {};
+  } catch {
+    return {};
+  }
+}
+
+// ============================================================
+// REMOVAL — canvas decode/re-encode (pixel rebuild)
+//
+// This is the ONLY reliable way to strip ALL metadata.
+// Previous approach (piexifjs tag deletion) left behind:
+//   APP2 (ICC Profile), APP13 (IPTC), XMP, Photoshop data,
+//   MakerNotes, thumbnails, comments, and dozens of other
+//   metadata containers that piexifjs does not touch.
+//
+// Canvas approach: decode image → draw pixels → export fresh file.
+// The browser generates a brand-new file containing ONLY pixels.
+// ============================================================
+
+type OutputFormat = "image/jpeg" | "image/png" | "image/webp";
+
+/**
+ * Detect the output format from the input file type.
+ * Falls back to image/png for unknown types.
+ */
+function detectOutputFormat(file: File): OutputFormat {
+  const type = file.type.toLowerCase();
+  if (type === "image/jpeg" || type === "image/jpg") return "image/jpeg";
+  if (type === "image/webp") return "image/webp";
+  return "image/png";
+}
+
+/**
+ * Load an image from a File into an HTMLImageElement.
+ */
+function loadImage(file: File): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      try {
-        const dataUrl = e.target?.result as string;
-        const metadata = await extractExifFromDataUrl(dataUrl);
-        resolve(metadata);
-      } catch (err) {
-        reject(err);
-      }
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      resolve(img);
     };
-    reader.onerror = () => reject(new Error("Failed to read file"));
-    reader.readAsDataURL(file);
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error(`Failed to load image: ${file.name}`));
+    };
+    img.src = url;
   });
 }
 
-async function extractExifFromDataUrl(dataUrl: string): Promise<ImageMetadata> {
-  const exifr = await import("exifr");
-  const buffer = await fetch(dataUrl).then((r) => r.arrayBuffer());
-  const uint8Array = new Uint8Array(buffer);
-  const result = await exifr.default.parse(uint8Array, true);
-  return result || {};
+/**
+ * Core cleaning function: decode image → draw to canvas → export.
+ * Produces a completely fresh file with ZERO metadata.
+ */
+async function rebuildImageFromPixels(
+  file: File,
+  outputFormat: OutputFormat,
+  quality: number = 0.92
+): Promise<Blob> {
+  const img = await loadImage(file);
+
+  const canvas = document.createElement("canvas");
+  canvas.width = img.naturalWidth;
+  canvas.height = img.naturalHeight;
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("Failed to get canvas 2D context");
+
+  // Draw the image — this copies ONLY pixels, no metadata
+  ctx.drawImage(img, 0, 0);
+
+  // Export as a fresh file — browser generates brand-new binary
+  return new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => {
+        if (blob) resolve(blob);
+        else reject(new Error("Failed to export canvas to blob"));
+      },
+      outputFormat,
+      quality
+    );
+  });
 }
 
-// --- Removal ---
-
+/**
+ * Remove ALL metadata from an image by rebuilding from pixels.
+ *
+ * Works for JPEG, PNG, WEBP — any format the browser can decode.
+ * The output is a completely fresh file containing ONLY pixel data.
+ *
+ * Before: 86+ metadata fields (EXIF, ICC, IPTC, XMP, MakerNotes, etc.)
+ * After:  0 metadata fields
+ */
 export async function removeImageMetadata(
   file: File,
-  options: { removeGPS?: boolean; removeCamera?: boolean; removeDevice?: boolean; removeSoftware?: boolean; removeTimestamp?: boolean } = {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _options?: { removeGPS?: boolean; removeCamera?: boolean; removeDevice?: boolean; removeSoftware?: boolean; removeTimestamp?: boolean }
 ): Promise<Blob> {
-  const { removeGPS = true, removeCamera = true, removeDevice = true, removeSoftware = true, removeTimestamp = true } = options;
-
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      try {
-        const dataUrl = e.target?.result as string;
-        const cleanDataUrl = await cleanImageMetadata(dataUrl, {
-          removeGPS, removeCamera, removeDevice, removeSoftware, removeTimestamp,
-        });
-        const response = await fetch(cleanDataUrl);
-        const blob = await response.blob();
-        resolve(blob);
-      } catch (err) {
-        reject(err);
-      }
-    };
-    reader.onerror = () => reject(new Error("Failed to read file"));
-    reader.readAsDataURL(file);
-  });
+  // Options are ignored — we remove EVERYTHING via pixel rebuild.
+  // This is intentional: partial removal is unreliable and gives
+  // users a false sense of security.
+  const outputFormat = detectOutputFormat(file);
+  return rebuildImageFromPixels(file, outputFormat);
 }
 
+/**
+ * Remove GPS only — but since we rebuild from pixels, all metadata
+ * is removed. This maintains API compatibility with callers that
+ * expect selective removal, while actually providing full cleaning.
+ */
 export async function removeGPSOnly(file: File): Promise<Blob> {
-  return removeImageMetadata(file, {
-    removeGPS: true, removeCamera: false, removeDevice: false, removeSoftware: false, removeTimestamp: false,
-  });
+  return removeImageMetadata(file);
 }
 
+/**
+ * Clean for social media — rebuild from pixels (full metadata removal).
+ */
 export async function cleanForSocialMedia(file: File): Promise<Blob> {
-  return removeImageMetadata(file, {
-    removeGPS: true, removeCamera: true, removeDevice: true, removeSoftware: false, removeTimestamp: true,
-  });
+  return removeImageMetadata(file);
 }
 
-async function cleanImageMetadata(
-  dataUrl: string,
-  options: { removeGPS: boolean; removeCamera: boolean; removeDevice: boolean; removeSoftware: boolean; removeTimestamp: boolean }
-): Promise<string> {
-  if (dataUrl.includes("image/png")) {
-    return cleanPngMetadata(dataUrl);
-  }
-  return cleanJpegMetadata(dataUrl, options);
-}
+// ============================================================
+// VERIFICATION — confirm metadata was actually removed
+// ============================================================
 
-// --- PNG Cleaning ---
-// Strips all text/auxiliary metadata chunks while keeping image data intact.
-// PNG chunk types removed: tEXt, iTXt, zTXt (text metadata), pHYs (physical dims),
-// sBIT (significant bits), gAMA (gamma), cHRM (chromaticity), iCCP (ICC profile),
-// sRGB (color space), tIME (modification time), tRNS (transparency), bKGD (background).
-
-const PNG_METADATA_CHUNKS = new Set([
-  "tEXt", "iTXt", "zTXt",  // text metadata
-  "pHYs",                    // physical pixel dimensions
-  "sBIT",                    // significant bits
-  "gAMA",                    // gamma
-  "cHRM",                    // chromaticity
-  "iCCP",                    // ICC color profile
-  "sRGB",                    // color space
-  "tIME",                    // last modification time
-  "tRNS",                    // transparency
-  "bKGD",                    // background
-  "sPLT",                    // suggested palette
-  "hIST",                    // histogram
-  "pCAL",                    // pixel calibration
-  "gIFg",                    // GIF extension
-  "gIFt",                    // GIF text
-  "gIFx",                    // GIF extension
-  "oFFs",                    // physical offset
-  "pCAL",                    // pixel calibration
-  "sCAL",                    // physical scale
-  "iTXt",                    // international text
-]);
-
-async function cleanPngMetadata(dataUrl: string): Promise<string> {
-  const response = await fetch(dataUrl);
-  const buffer = await response.arrayBuffer();
-  const uint8Array = new Uint8Array(buffer);
-
-  // PNG signature is 8 bytes
-  const signature = uint8Array.slice(0, 8);
-  const chunks: Uint8Array[] = [signature];
-
-  let i = 8;
-  while (i < uint8Array.length - 12) {
-    // Read chunk length (big-endian uint32)
-    const length = (uint8Array[i] << 24) | (uint8Array[i + 1] << 16) | (uint8Array[i + 2] << 8) | uint8Array[i + 3];
-    // Read chunk type (4 ASCII chars)
-    const type = String.fromCharCode(uint8Array[i + 4], uint8Array[i + 5], uint8Array[i + 6], uint8Array[i + 7]);
-
-    // Validate chunk: length must be reasonable and type must be 4 printable ASCII chars
-    const isValidChunk = length >= 0 && length < 100_000_000 && /^[A-Za-z]{4}$/.test(type);
-
-    if (!isValidChunk) {
-      // Corrupted chunk, copy rest of file as-is
-      chunks.push(uint8Array.slice(i));
-      break;
-    }
-
-    // Keep non-metadata chunks (including IHDR, IDAT, IEND, and unknown chunks)
-    if (!PNG_METADATA_CHUNKS.has(type)) {
-      chunks.push(uint8Array.slice(i, i + 12 + length));
-    }
-
-    // Move to next chunk (4 bytes length + 4 bytes type + length bytes + 4 bytes CRC)
-    i += 12 + length;
-  }
-
-  const totalLength = chunks.reduce((acc, chunk) => acc + chunk.length, 0);
-  const result = new Uint8Array(totalLength);
-  let offset = 0;
-  for (const chunk of chunks) {
-    result.set(chunk, offset);
-    offset += chunk.length;
-  }
-
-  const blob = new Blob([result], { type: "image/png" });
-  return new Promise<string>((resolve) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.readAsDataURL(blob);
-  });
-}
-
-// --- JPEG Cleaning ---
-
-async function cleanJpegMetadata(
-  dataUrl: string,
-  options: { removeGPS: boolean; removeCamera: boolean; removeDevice: boolean; removeSoftware: boolean; removeTimestamp: boolean }
-): Promise<string> {
-  const piexif = await import("piexifjs");
-
-  let exifObj: Record<string, unknown>;
-  try {
-    exifObj = piexif.default.load(dataUrl);
-  } catch {
-    // No EXIF data or corrupted — return as-is (nothing to clean)
-    return dataUrl;
-  }
-
-  // GPS removal: zero out the GPS IFD
-  if (options.removeGPS) {
-    exifObj.GPS = [];
-  }
-
-  // Camera/Device removal: delete Make, Model, BodySerialNumber from both Exif and Image IFDs
-  if (options.removeCamera || options.removeDevice) {
-    if (exifObj.Exif) {
-      const exif = exifObj.Exif as Record<string, unknown>;
-      delete exif[piexif.default.ExifIFD.Make];
-      delete exif[piexif.default.ExifIFD.Model];
-      delete exif[piexif.default.ExifIFD.BodySerialNumber];
-      delete exif[piexif.default.ExifIFD.LensMake];
-      delete exif[piexif.default.ExifIFD.LensModel];
-    }
-    if (exifObj.Image) {
-      const img = exifObj.Image as Record<string, unknown>;
-      delete img[piexif.default.ImageIFD.Make];
-      delete img[piexif.default.ImageIFD.Model];
-    }
-  }
-
-  // Software removal
-  if (options.removeSoftware) {
-    if (exifObj.Image) {
-      delete (exifObj.Image as Record<string, unknown>)[piexif.default.ImageIFD.Software];
-    }
-  }
-
-  // Timestamp removal
-  if (options.removeTimestamp) {
-    if (exifObj.Exif) {
-      const exif = exifObj.Exif as Record<string, unknown>;
-      delete exif[piexif.default.ExifIFD.DateTimeOriginal];
-      delete exif[piexif.default.ExifIFD.DateTimeDigitized];
-      delete exif[piexif.default.ExifIFD.OffsetTimeOriginal];
-      delete exif[piexif.default.ExifIFD.OffsetTimeDigitized];
-    }
-    if (exifObj.Image) {
-      delete (exifObj.Image as Record<string, unknown>)[piexif.default.ImageIFD.DateTime];
-    }
-  }
-
-  // Remove user comment and image description
-  if (exifObj.Exif) {
-    const exif = exifObj.Exif as Record<string, unknown>;
-    delete exif[piexif.default.ExifIFD.UserComment];
-    delete exif[piexif.default.ExifIFD.ImageDescription];
-    delete exif[piexif.default.ExifIFD.Copyright];
-  }
-  if (exifObj.Image) {
-    const img = exifObj.Image as Record<string, unknown>;
-    delete img[piexif.default.ImageIFD.ImageDescription];
-    delete img[piexif.default.ImageIFD.Copyright];
-    delete img[piexif.default.ImageIFD.Artist];
-  }
-
-  try {
-    const exifStr = piexif.default.dump(exifObj);
-    return piexif.default.insert(exifStr, dataUrl);
-  } catch {
-    // piexif failed to serialize — return original
-    return dataUrl;
-  }
-}
-
-// --- Verification ---
-
+/**
+ * Verify by comparing before/after metadata objects.
+ * Used by tests and when metadata was already extracted.
+ */
 export function verifyMetadataCleaned(before: ImageMetadata, after: ImageMetadata): VerificationResult {
   const beforeFields = Object.keys(before);
   const afterFields = Object.keys(after);
 
-  const removedFields = beforeFields.filter((f) => !afterFields.includes(f) || after[f] === undefined || after[f] === null || after[f] === "");
+  const removedFields = beforeFields.filter(
+    (f) => !afterFields.includes(f) || after[f] === undefined || after[f] === null || after[f] === ""
+  );
 
   const check = (meta: ImageMetadata) => ({
     metadataCount: Object.keys(meta).length,
@@ -300,50 +202,39 @@ export function verifyMetadataCleaned(before: ImageMetadata, after: ImageMetadat
 
   const details: string[] = [];
 
-  if (beforeState.hasGPS && !afterState.hasGPS) {
-    details.push("GPS coordinates removed successfully");
-  } else if (beforeState.hasGPS && afterState.hasGPS) {
-    details.push("WARNING: GPS data still present after cleaning");
-  }
+  const categories = [
+    { name: "GPS", before: beforeState.hasGPS, after: afterState.hasGPS },
+    { name: "Device information", before: beforeState.hasDevice, after: afterState.hasDevice },
+    { name: "Timestamps", before: beforeState.hasTimestamp, after: afterState.hasTimestamp },
+    { name: "Software tags", before: beforeState.hasSoftware, after: afterState.hasSoftware },
+    { name: "Author information", before: beforeState.hasAuthor, after: afterState.hasAuthor },
+  ];
 
-  if (beforeState.hasDevice && !afterState.hasDevice) {
-    details.push("Device information removed successfully");
-  } else if (beforeState.hasDevice && afterState.hasDevice) {
-    details.push("WARNING: Device information still present after cleaning");
-  }
-
-  if (beforeState.hasTimestamp && !afterState.hasTimestamp) {
-    details.push("Timestamps removed successfully");
-  } else if (beforeState.hasTimestamp && afterState.hasTimestamp) {
-    details.push("WARNING: Timestamps still present after cleaning");
-  }
-
-  if (beforeState.hasSoftware && !afterState.hasSoftware) {
-    details.push("Software tags removed successfully");
-  } else if (beforeState.hasSoftware && afterState.hasSoftware) {
-    details.push("WARNING: Software tags still present after cleaning");
-  }
-
-  if (beforeState.hasAuthor && !afterState.hasAuthor) {
-    details.push("Author information removed successfully");
-  } else if (beforeState.hasAuthor && afterState.hasAuthor) {
-    details.push("WARNING: Author information still present after cleaning");
+  for (const cat of categories) {
+    if (cat.before && !cat.after) {
+      details.push(`${cat.name} removed successfully`);
+    } else if (cat.before && cat.after) {
+      details.push(`WARNING: ${cat.name} still present after cleaning`);
+    }
   }
 
   if (removedFields.length > 0) {
-    details.push(`Removed ${removedFields.length} metadata field(s): ${removedFields.slice(0, 10).join(", ")}${removedFields.length > 10 ? "..." : ""}`);
+    details.push(`Removed ${removedFields.length} metadata field(s)`);
+  }
+
+  if (afterFields.length > 0) {
+    details.push(`WARNING: ${afterFields.length} metadata field(s) still present: ${afterFields.slice(0, 5).join(", ")}${afterFields.length > 5 ? "..." : ""}`);
   }
 
   if (details.length === 0) {
     if (beforeFields.length === 0) {
       details.push("No metadata was present — file was already clean");
     } else {
-      details.push("Metadata fields were modified");
+      details.push("All metadata removed — file contains only pixels");
     }
   }
 
-  // Verified clean = no sensitive data remains
-  const verifiedClean = !afterState.hasGPS && !afterState.hasDevice && !afterState.hasTimestamp && !afterState.hasAuthor;
+  const verifiedClean = afterFields.length === 0;
 
   return {
     before: { ...beforeState, fields: beforeFields },
@@ -354,7 +245,23 @@ export function verifyMetadataCleaned(before: ImageMetadata, after: ImageMetadat
   };
 }
 
-// --- Detection Helpers ---
+/**
+ * Verify by re-reading the cleaned blob.
+ * Used in production to confirm actual output.
+ */
+export async function verifyMetadataRemoval(
+  original: File,
+  cleaned: Blob
+): Promise<VerificationResult> {
+  const beforeMeta = await extractImageMetadata(original);
+  const cleanedFile = new File([cleaned], "cleaned", { type: cleaned.type });
+  const afterMeta = await extractImageMetadata(cleanedFile);
+  return verifyMetadataCleaned(beforeMeta, afterMeta);
+}
+
+// ============================================================
+// DETECTION HELPERS
+// ============================================================
 
 export function hasGPSData(metadata: ImageMetadata): boolean {
   return !!(metadata.gps || metadata.GPSLatitude || metadata.latitude || metadata.GPS);
