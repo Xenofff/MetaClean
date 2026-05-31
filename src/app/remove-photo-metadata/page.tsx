@@ -6,7 +6,6 @@ import UploadZone from "@/components/upload-zone";
 import MetadataTable from "@/components/metadata-table";
 import RiskReport from "@/components/risk-report";
 import JsonLd from "@/components/json-ld";
-import InContentAd from "@/components/ads/in-content-ad";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -123,8 +122,6 @@ export default function RemovePhotoMetadataPage() {
             ))}
           </div>
         </div>
-
-        <InContentAd />
 
         <div className="grid gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-6">

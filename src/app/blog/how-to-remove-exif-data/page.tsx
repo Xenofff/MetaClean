@@ -1,7 +1,6 @@
 import Link from "next/link";
 import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
-import InContentAd from "@/components/ads/in-content-ad";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
 
@@ -86,8 +85,6 @@ export default function HowToRemoveExifDataPage() {
             <li><strong>Date and Time Tracking:</strong> Timestamps reveal when you were at specific locations, allowing others to track your movements.</li>
             <li><strong>Personal Information:</strong> Some devices embed the owner&apos;s name in EXIF data.</li>
           </ul>
-
-          <InContentAd />
 
           <h2>How to Remove EXIF Data Using MetaClean</h2>
 
