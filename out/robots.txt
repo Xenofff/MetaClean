@@ -1,4 +1,0 @@
-User-Agent: *
-Allow: /
-
-Sitemap: https://metaclean.app/sitemap.xml
