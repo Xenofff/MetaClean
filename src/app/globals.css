@@ -205,13 +205,13 @@ article hr {
   margin: 2rem 0;
 }
 
-article a {
+article a:not([class*="bg-"]) {
   color: var(--primary);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
-article a:hover {
+article a:not([class*="bg-"]):hover {
   color: var(--primary-hover);
 }
 

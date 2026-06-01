@@ -43,14 +43,12 @@ function createICO(images: { size: number; data: Buffer }[]) {
   const dirEntrySize = 16;
   const dirSize = headerSize + numImages * dirEntrySize;
 
-  let dataOffset = dirSize;
   const imageDataBuffers: Buffer[] = [];
 
   for (const img of images) {
     const pngData = img.data;
     // ICO stores PNG data directly for modern icons
     imageDataBuffers.push(pngData);
-    dataOffset += pngData.length;
   }
 
   const totalSize = dirSize + imageDataBuffers.reduce((a, b) => a + b.length, 0);
