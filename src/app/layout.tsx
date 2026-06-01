@@ -6,6 +6,9 @@ import Footer from "@/components/footer";
 import JsonLd from "@/components/json-ld";
 import { siteConfig, generateOrganizationSchema } from "@/lib/schema";
 
+// basePath must match next.config.ts — Next.js metadata API does not auto-prepend it
+const BASE_PATH = "/MetaClean";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -28,19 +31,19 @@ export const metadata: Metadata = {
   publisher: "MetaClean",
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: `${BASE_PATH}/favicon.svg`, type: "image/svg+xml" },
+      { url: `${BASE_PATH}/favicon-32x32.png`, sizes: "32x32", type: "image/png" },
+      { url: `${BASE_PATH}/favicon-16x16.png`, sizes: "16x16", type: "image/png" },
     ],
     apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      { url: `${BASE_PATH}/apple-touch-icon.png`, sizes: "180x180", type: "image/png" },
     ],
     other: [
-      { url: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
-      { url: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
+      { url: `${BASE_PATH}/android-chrome-192x192.png`, sizes: "192x192", type: "image/png" },
+      { url: `${BASE_PATH}/android-chrome-512x512.png`, sizes: "512x512", type: "image/png" },
     ],
   },
-  manifest: "/site.webmanifest",
+  manifest: `${BASE_PATH}/site.webmanifest`,
   robots: {
     index: true,
     follow: true,
@@ -89,7 +92,7 @@ export default function RootLayout({
       <head>
         <meta name="theme-color" content="#635BFF" />
         <meta name="msapplication-TileColor" content="#635BFF" />
-        <meta name="msapplication-TileImage" content="/android-chrome-192x192.png" />
+        <meta name="msapplication-TileImage" content={`${BASE_PATH}/android-chrome-192x192.png`} />
         {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
           <script
             defer
