@@ -148,3 +148,113 @@ export function getRiskLevelBgColor(level: string): string {
     default: return "bg-muted";
   }
 }
+
+// ============================================================
+// PDF-specific privacy score
+// ============================================================
+
+export function calculatePDFPrivacyScore(metadata: Record<string, unknown>): PrivacyScoreResult {
+  let score = 100;
+  const issues: PrivacyIssue[] = [];
+
+  if (metadata.Author) {
+    score -= 15;
+    issues.push({
+      category: "Author Information",
+      severity: "high",
+      description: `Author "${metadata.Author}" can be linked to your identity`,
+      penalty: 15,
+    });
+  }
+
+  if (metadata.Title) {
+    score -= 10;
+    issues.push({
+      category: "Document Title",
+      severity: "medium",
+      description: "Title may reveal document purpose or content",
+      penalty: 10,
+    });
+  }
+
+  if (metadata.Subject) {
+    score -= 10;
+    issues.push({
+      category: "Subject",
+      severity: "medium",
+      description: "Subject field may reveal document topics",
+      penalty: 10,
+    });
+  }
+
+  if (metadata.Creator) {
+    score -= 10;
+    issues.push({
+      category: "Creator Software",
+      severity: "low",
+      description: `Creator "${metadata.Creator}" reveals editing software`,
+      penalty: 10,
+    });
+  }
+
+  if (metadata.Producer) {
+    score -= 5;
+    issues.push({
+      category: "Producer",
+      severity: "low",
+      description: "Producer reveals PDF generation tool",
+      penalty: 5,
+    });
+  }
+
+  if (metadata.Keywords && (metadata.Keywords as string[]).length > 0) {
+    score -= 10;
+    issues.push({
+      category: "Keywords",
+      severity: "medium",
+      description: "Keywords may reveal document topics or author interests",
+      penalty: 10,
+    });
+  }
+
+  if (metadata.CreationDate) {
+    score -= 5;
+    issues.push({
+      category: "Creation Date",
+      severity: "low",
+      description: "Creation date reveals when document was made",
+      penalty: 5,
+    });
+  }
+
+  if (metadata.ModDate) {
+    score -= 5;
+    issues.push({
+      category: "Modification Date",
+      severity: "low",
+      description: "Modification date reveals editing timeline",
+      penalty: 5,
+    });
+  }
+
+  score = Math.max(0, Math.min(100, score));
+
+  let grade: PrivacyScoreResult["grade"] = "A+";
+  if (score < 50) grade = "F";
+  else if (score < 60) grade = "D";
+  else if (score < 70) grade = "C";
+  else if (score < 80) grade = "B";
+  else if (score < 90) grade = "A";
+
+  let riskLevel: PrivacyScoreResult["riskLevel"] = "Safe";
+  if (score < 30) riskLevel = "Critical";
+  else if (score < 50) riskLevel = "High Risk";
+  else if (score < 70) riskLevel = "Medium Risk";
+  else if (score < 90) riskLevel = "Low Risk";
+
+  const summary = issues.length === 0
+    ? "No metadata detected. Your PDF is safe to share."
+    : `${issues.length} metadata field(s) found that may reveal information about you.`;
+
+  return { score, issues, grade, riskLevel, summary };
+}
