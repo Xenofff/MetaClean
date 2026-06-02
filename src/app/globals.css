@@ -62,9 +62,7 @@ html {
    ============================================ */
 
 article {
-  max-width: 750px;
-  margin-left: auto;
-  margin-right: auto;
+  /* Width controlled by parent container (max-w-7xl for TOC pages, max-w-4xl for others) */
 }
 
 article h2 {
