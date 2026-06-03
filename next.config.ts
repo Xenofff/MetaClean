@@ -6,9 +6,6 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-
-  basePath: "/MetaClean",
-  assetPrefix: "/MetaClean/",
 };
 
 export default nextConfig;

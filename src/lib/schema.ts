@@ -1,8 +1,8 @@
 export const siteConfig = {
   name: "MetaClean",
   description: "Remove metadata from photos, PDFs, and text files instantly. All processing happens client-side — your files never leave your device.",
-  url: "https://metaclean.app",
-  ogImage: "https://metaclean.app/og.png",
+  url: "https://metaclean.site",
+  ogImage: "https://metaclean.site/og.png",
   keywords: [
     "remove metadata",
     "EXIF remover",

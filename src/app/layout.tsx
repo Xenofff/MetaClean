@@ -6,8 +6,8 @@ import Footer from "@/components/footer";
 import JsonLd from "@/components/json-ld";
 import { siteConfig, generateOrganizationSchema } from "@/lib/schema";
 
-// basePath must match next.config.ts — Next.js metadata API does not auto-prepend it
-const BASE_PATH = "/MetaClean";
+// No basePath — deploying to root domain (metaclean.site)
+const BASE_PATH = "";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
