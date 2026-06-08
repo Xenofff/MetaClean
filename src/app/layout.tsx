@@ -5,6 +5,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import JsonLd from "@/components/json-ld";
 import { siteConfig, generateOrganizationSchema } from "@/lib/schema";
+import Script from "next/script";
 
 // No basePath — deploying to root domain (metaclean.site)
 const BASE_PATH = "";
@@ -83,37 +84,31 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
-}: Readonly<{
+                                     children,
+                                   }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+      <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <head>
         <meta name="theme-color" content="#635BFF" />
         <meta name="msapplication-TileColor" content="#635BFF" />
         <meta name="msapplication-TileImage" content={`${BASE_PATH}/android-chrome-192x192.png`} />
-        {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
-          <script
+
+        {/* Umami Analytics */}
+        <Script
             defer
-            data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
-            src={process.env.NEXT_PUBLIC_UMAMI_URL || "https://analytics.example.com/script.js"}
-          />
-        )}
-        {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
-          <script
-            defer
-            data-domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
-            src="https://plausible.io/js/script.js"
-          />
-        )}
+            src="https://cloud.umami.is/script.js"
+            data-website-id="3d609fbb-9f56-4fd7-a3ea-dd88d368c1ba"
+            strategy="afterInteractive"
+        />
       </head>
       <body className="min-h-full flex flex-col">
-        <JsonLd data={generateOrganizationSchema()} />
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+      <JsonLd data={generateOrganizationSchema()} />
+      <Header />
+      <main className="flex-1">{children}</main>
+      <Footer />
       </body>
-    </html>
+      </html>
   );
 }
