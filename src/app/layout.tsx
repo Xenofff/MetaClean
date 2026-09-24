@@ -6,6 +6,7 @@ import Footer from "@/components/footer";
 import JsonLd from "@/components/json-ld";
 import { siteConfig, generateOrganizationSchema } from "@/lib/schema";
 import Script from "next/script";
+import { LanguageProvider } from "@/lib/i18n/context";
 
 // No basePath — deploying to root domain (metaclean.site)
 const BASE_PATH = "";
@@ -95,6 +96,13 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#635BFF" />
         <meta name="msapplication-TileImage" content={`${BASE_PATH}/android-chrome-192x192.png`} />
 
+        {/* Immediate system language detector */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var s=localStorage.getItem('metaclean_lang');var n=(navigator.languages&&navigator.languages[0])||navigator.language||'';var l=(s==='ru'||s==='en')?s:(/^ru\\b/i.test(n)?'ru':'en');document.documentElement.lang=l;if(l==='ru'){document.documentElement.classList.add('lang-ru');}}catch(e){}})();`,
+          }}
+        />
+
         {/* Umami Analytics */}
         <Script
             defer
@@ -104,10 +112,12 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
-      <JsonLd data={generateOrganizationSchema()} />
-      <Header />
-      <main className="flex-1">{children}</main>
-      <Footer />
+      <LanguageProvider>
+        <JsonLd data={generateOrganizationSchema()} />
+        <Header />
+        <main className="flex-1">{children}</main>
+        <Footer />
+      </LanguageProvider>
       </body>
       </html>
   );

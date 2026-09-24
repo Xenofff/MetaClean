@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { formatFileSize } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/i18n/context";
 
 interface BatchFile {
   id: string;
@@ -19,6 +20,7 @@ interface BatchCleanerProps {
 }
 
 export default function BatchCleaner({ files, onClean, onComplete }: BatchCleanerProps) {
+  const { lang, t } = useLanguage();
   const [batchFiles, setBatchFiles] = useState<BatchFile[]>(
     files.map((file) => ({
       id: Math.random().toString(36).substring(7),
@@ -87,9 +89,11 @@ export default function BatchCleaner({ files, onClean, onComplete }: BatchCleane
     <div className="space-y-4">
       <div className="rounded-xl border border-border overflow-hidden">
         <div className="border-b border-border bg-muted/50 px-4 py-3 flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-foreground">Batch Processing</h3>
+          <h3 className="text-sm font-semibold text-foreground">
+            {lang === "ru" ? "Пакетная обработка" : "Batch Processing"}
+          </h3>
           <span className="text-xs text-muted-foreground">
-            {completedCount}/{batchFiles.length} completed
+            {completedCount}/{batchFiles.length} {lang === "ru" ? "завершено" : "completed"}
           </span>
         </div>
 
@@ -104,7 +108,7 @@ export default function BatchCleaner({ files, onClean, onComplete }: BatchCleane
               <div className="flex items-center gap-2">
                 {batchFile.status === "pending" && (
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-2 py-1 text-xs font-medium text-muted-foreground">
-                    Pending
+                    {t("ui.status_pending")}
                   </span>
                 )}
                 {batchFile.status === "processing" && (
@@ -113,7 +117,7 @@ export default function BatchCleaner({ files, onClean, onComplete }: BatchCleane
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                     </svg>
-                    Processing
+                    {t("ui.status_processing")}
                   </span>
                 )}
                 {batchFile.status === "completed" && (
@@ -121,12 +125,12 @@ export default function BatchCleaner({ files, onClean, onComplete }: BatchCleane
                     <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Done
+                    {t("ui.status_completed")}
                   </span>
                 )}
                 {batchFile.status === "error" && (
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-danger/10 px-2 py-1 text-xs font-medium text-danger">
-                    Error
+                    {t("ui.status_error")}
                   </span>
                 )}
               </div>
@@ -138,12 +142,12 @@ export default function BatchCleaner({ files, onClean, onComplete }: BatchCleane
       <div className="flex gap-3">
         {!isProcessing && pendingCount > 0 && (
           <Button onClick={processFiles} className="flex-1">
-            Clean All Files
+            {t("ui.clean_all")}
           </Button>
         )}
         {completedCount > 0 && (
           <Button onClick={downloadAll} variant="outline" className="flex-1">
-            Download All ({completedCount})
+            {lang === "ru" ? `Скачать все (${completedCount})` : `Download All (${completedCount})`}
           </Button>
         )}
       </div>

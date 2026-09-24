@@ -2,6 +2,7 @@
 
 import { useCallback, useState, useRef } from "react";
 import { cn, formatFileSize } from "@/lib/utils";
+import { useLanguage } from "@/lib/i18n/context";
 
 interface UploadZoneProps {
   onFilesSelected: (files: File[]) => void;
@@ -15,12 +16,16 @@ export default function UploadZone({
   onFilesSelected,
   accept = "*",
   multiple = false,
-  label = "Drop your files here",
-  description = "or click to browse",
+  label,
+  description,
 }: UploadZoneProps) {
+  const { lang, t } = useLanguage();
   const [isDragging, setIsDragging] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const displayLabel = label || t("ui.drop_files");
+  const displayDescription = description || t("ui.click_browse");
 
   const handleDrag = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -87,7 +92,7 @@ export default function UploadZone({
             inputRef.current?.click();
           }
         }}
-        aria-label={label}
+        aria-label={displayLabel}
       >
         <input
           ref={inputRef}
@@ -120,12 +125,14 @@ export default function UploadZone({
           </div>
 
           <div>
-            <p className="text-base font-medium text-foreground">{label}</p>
-            <p className="text-sm text-muted-foreground mt-1">{description}</p>
+            <p className="text-base font-medium text-foreground">{displayLabel}</p>
+            <p className="text-sm text-muted-foreground mt-1">{displayDescription}</p>
           </div>
 
           {accept !== "*" && (
-            <p className="text-xs text-muted-foreground">Supported: {accept}</p>
+            <p className="text-xs text-muted-foreground">
+              {lang === "ru" ? `Поддерживаются: ${accept}` : `Supported: ${accept}`}
+            </p>
           )}
         </div>
       </div>

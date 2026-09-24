@@ -5,8 +5,9 @@ import ToolCard from "@/components/tool-card";
 import FAQSection from "@/components/faq-section";
 import JsonLd from "@/components/json-ld";
 import { siteConfig, generateWebApplicationSchema, generateFAQSchema } from "@/lib/schema";
+import { useLanguage } from "@/lib/i18n/context";
 
-const faqs = [
+const faqsEn = [
   {
     question: "What is MetaClean?",
     answer: "MetaClean is a free, client-side tool that removes metadata from photos, PDFs, and text files. All processing happens in your browser — your files are never uploaded to any server.",
@@ -69,64 +70,269 @@ const faqs = [
   },
 ];
 
-const features = [
+const faqsRu = [
   {
-    icon: (
-      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-      </svg>
-    ),
-    title: "100% Private",
-    description: "All processing happens in your browser. Files never leave your device.",
+    question: "Что такое MetaClean?",
+    answer: "MetaClean — это бесплатный браузерный инструмент для удаления метаданных из фотографий, документов PDF и текстовых файлов. Вся обработка происходит прямо в вашем браузере — файлы никогда не передаются на сервер.",
   },
   {
-    icon: (
-      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-    ),
-    title: "Instant Processing",
-    description: "Clean files in milliseconds with our optimized client-side engine.",
+    question: "MetaClean действительно бесплатен?",
+    answer: "Да, MetaClean полностью бесплатен. Здесь нет скрытых платежей, подписок или лимитов на количество файлов. Мы убеждены, что средства защиты приватности должны быть доступны каждому.",
   },
   {
-    icon: (
-      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-      </svg>
-    ),
-    title: "No Uploads",
-    description: "Zero server uploads. Your data stays on your machine, always.",
+    question: "Как работает обработка на стороне клиента?",
+    answer: "Когда вы выбираете файл, он остается исключительно в вашем браузере. Скрипты JavaScript и WebAssembly обрабатывают его локально, стирая метаданные перед скачиванием очищенной копии.",
   },
   {
-    icon: (
-      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-    title: "Completely Free",
-    description: "No hidden fees. No subscriptions. Free forever.",
-  },
-];
-
-const howItWorks = [
-  {
-    step: "01",
-    title: "Upload Your File",
-    description: "Drag and drop or click to select your photos, PDFs, or text files.",
+    question: "Какие метаданные можно удалить из фотографий?",
+    answer: "MetaClean удаляет GPS-координаты места съемки, модель камеры и телефона, серийные номера, метки графических редакторов, дату и время, а также все прочие EXIF-данные из файлов JPG, JPEG, PNG и WEBP.",
   },
   {
-    step: "02",
-    title: "Review Metadata",
-    description: "See all detected metadata and choose what to remove.",
+    question: "Можно ли удалить метаданные из файлов PDF?",
+    answer: "Да, MetaClean удаляет имя автора, заголовок документа, название программы создания, ключевые слова и прочие свойства, сохраняя текст и оформление документа без изменений.",
   },
   {
-    step: "03",
-    title: "Clean & Download",
-    description: "One click to clean. Download your privacy-safe file instantly.",
+    question: "Какие текстовые форматы поддерживаются?",
+    answer: "MetaClean поддерживает форматы TXT, CSV, JSON и XML. Инструмент удаляет скрытые символы Юникода, метки BOM, невидимые трекеры и нормализует окончания строк.",
+  },
+  {
+    question: "Безопасны ли мои данные при использовании MetaClean?",
+    answer: "Абсолютно. Поскольку обработка происходит локально в браузере, ваши файлы не покидают компьютер или смартфон. Ни у нас, ни у третьих лиц нет доступа к вашим файлам.",
+  },
+  {
+    question: "Нужно ли устанавливать программы или расширения?",
+    answer: "Нет, MetaClean работает полностью в браузере онлайн. Ничего скачивать и устанавливать не требуется. Просто откройте сайт и очистите файлы.",
+  },
+  {
+    question: "Работает ли сервис на смартфонах?",
+    answer: "Да, интерфейс MetaClean полностью адаптивен и работает на смартфонах iOS и Android, планшетах и компьютерах.",
+  },
+  {
+    question: "Что такое EXIF-данные?",
+    answer: "EXIF (Exchangeable Image File Format) — это технические метаданные, встраиваемые камерами и телефонами в каждый снимок. Они включают координаты геолокации, модель устройства, дату и параметры экспозиции.",
+  },
+  {
+    question: "Зачем удалять метаданные перед отправкой фото?",
+    answer: "Метаданные могут выдать ваш домашний адрес, марку телефона и точное время съемки. Очистка метаданных защищает вас от сталкеров, мошенников и нежелательной слежки.",
+  },
+  {
+    question: "Поддерживается ли пакетная очистка нескольких файлов?",
+    answer: "Да, в MetaClean есть инструмент пакетной очистки. Вы можете загрузить десятки файлов сразу и скачать очищенные версии одним архивом ZIP.",
+  },
+  {
+    question: "Что означает оценка приватности (Privacy Score)?",
+    answer: "MetaClean оценивает файл по шкале от 0 до 100 на основе найденных метаданных. 100 — файл полностью чист и безопасен. GPS, данные об авторе и камере снижают оценку.",
+  },
+  {
+    question: "Работает ли MetaClean без интернета (офлайн)?",
+    answer: "Да, после того как страница загрузилась, инструмент может работать без подключения к сети, так как все вычисления производятся исключительно вашим браузером.",
+  },
+  {
+    question: "Как убедиться, что файл действительно очищен?",
+    answer: "После обработки MetaClean наглядно показывает сравнение «До» и «После». Вы можете лично убедиться, что все конфиденциальные поля удалены.",
   },
 ];
 
 export default function HomePage() {
+  const { lang, t } = useLanguage();
+  const isRu = lang === "ru";
+
+  const faqs = isRu ? faqsRu : faqsEn;
+
+  const features = [
+    {
+      icon: (
+        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+      ),
+      title: t("home.feat_private_title"),
+      description: t("home.feat_private_desc"),
+    },
+    {
+      icon: (
+        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      ),
+      title: t("home.feat_instant_title"),
+      description: t("home.feat_instant_desc"),
+    },
+    {
+      icon: (
+        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+        </svg>
+      ),
+      title: t("home.feat_no_uploads_title"),
+      description: t("home.feat_no_uploads_desc"),
+    },
+    {
+      icon: (
+        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+      title: t("home.feat_free_title"),
+      description: t("home.feat_free_desc"),
+    },
+  ];
+
+  const howItWorks = [
+    {
+      step: "01",
+      title: t("home.step1_title"),
+      description: t("home.step1_desc"),
+    },
+    {
+      step: "02",
+      title: t("home.step2_title"),
+      description: t("home.step2_desc"),
+    },
+    {
+      step: "03",
+      title: t("home.step3_title"),
+      description: t("home.step3_desc"),
+    },
+  ];
+
+  const toolCards = [
+    {
+      title: isRu ? "Очистка метаданных фото" : "Photo Metadata Remover",
+      description: isRu
+        ? "Удаление данных EXIF, GPS-координат, параметров камеры и времени с изображений."
+        : "Remove EXIF data, GPS coordinates, camera info, and timestamps from images.",
+      href: "/remove-photo-metadata/",
+      icon: (
+        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+      ),
+      features: isRu
+        ? ["Поддержка JPG, PNG, WEBP", "Удаление координат GPS", "Стирание данных камеры", "Предпросмотр до и после"]
+        : ["JPG, PNG, WEBP support", "Remove GPS data", "Remove camera info", "Before/after preview"],
+    },
+    {
+      title: isRu ? "Удаление GPS-локации" : "GPS Remover",
+      description: isRu
+        ? "Извлечение и удаление точных координат места съемки для защиты конфиденциальности."
+        : "Extract and display GPS coordinates. Remove location data to protect your privacy.",
+      href: "/remove-gps-from-photo/",
+      icon: (
+        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      ),
+      features: isRu
+        ? ["Извлечение координат", "Ссылка на Google Maps", "Удаление только GPS", "Предупреждения об угрозах"]
+        : ["Extract GPS coords", "Google Maps link", "Remove GPS only", "Privacy warnings"],
+    },
+    {
+      title: isRu ? "Просмотр данных EXIF" : "EXIF Viewer",
+      description: isRu
+        ? "Детальный анализ всех скрытых метаданных в ваших фото с удобным поиском и категориями."
+        : "Inspect all metadata embedded in your photos. Searchable table with categories.",
+      href: "/exif-viewer/",
+      icon: (
+        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      ),
+      features: isRu
+        ? ["Перетаскивание файлов", "Поиск по полям", "Фильтры категорий", "Оценка приватности"]
+        : ["Drag & drop", "Searchable fields", "Category filters", "Privacy score"],
+    },
+    {
+      title: isRu ? "Очистка для соцсетей" : "Social Media Cleaner",
+      description: isRu
+        ? "Проверка фото на риски приватности перед публикацией. Очистка в один клик."
+        : "Analyze photos for privacy risks before posting. One-click clean for social media.",
+      href: "/social-media-cleaner/",
+      icon: (
+        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m-9 0h10m-10 0H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2h-2" />
+        </svg>
+      ),
+      features: isRu
+        ? ["Определение устройства", "Предупреждения о GPS", "Скрытие даты", "Очистка в 1 клик"]
+        : ["Device detection", "GPS warnings", "Date exposure", "One-click clean"],
+    },
+    {
+      title: isRu ? "Пакетная очистка" : "Batch Metadata Remover",
+      description: isRu
+        ? "Загружайте десятки файлов и очищайте метаданные сразу со всех. Скачивание в ZIP."
+        : "Upload multiple files and clean metadata from all of them. Download as ZIP.",
+      href: "/batch-metadata-remover/",
+      icon: (
+        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+        </svg>
+      ),
+      features: isRu
+        ? ["Множество файлов", "Индикатор прогресса", "Скачивание в ZIP", "Поддержка фото и PDF"]
+        : ["Multiple files", "Progress tracking", "ZIP download", "Photo & PDF support"],
+    },
+    {
+      title: isRu ? "Оценка приватности" : "Privacy Score",
+      description: isRu
+        ? "Расчет индекса приватности от 0 до 100. Подробная расшифровка угроз в ваших файлах."
+        : "Calculate privacy score from 0-100. See detailed risk breakdown for your files.",
+      href: "/privacy-score-tool/",
+      icon: (
+        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      ),
+      features: isRu
+        ? ["График оценки", "Уровень риска", "Детальный отчет", "Обнаружение уязвимостей"]
+        : ["Score circle", "Risk level", "Detailed breakdown", "Issue detection"],
+    },
+  ];
+
+  const blogPosts = [
+    {
+      title: isRu ? "Как удалить данные EXIF из фотографий" : "How to Remove EXIF Data From Photos",
+      description: isRu
+        ? "Пошаговое руководство по удалению скрытых метаданных из фото перед публикацией в сети."
+        : "A complete guide to removing hidden metadata from your photos before sharing online.",
+      href: "/blog/how-to-remove-exif-data/",
+      readTime: isRu ? "5 мин чтения" : "5 min read",
+    },
+    {
+      title: isRu ? "Чем опасны метаданные в фотографиях" : "Why Photo Metadata Can Be Dangerous",
+      description: isRu
+        ? "Узнайте, какую конфиденциальную информацию о вас и вашей семье могут раскрыть фотографии."
+        : "Learn how metadata in your photos can expose sensitive information about you.",
+      href: "/blog/photo-metadata-danger/",
+      readTime: isRu ? "7 мин чтения" : "7 min read",
+    },
+    {
+      title: isRu ? "GPS в фото: как координаты выдают ваше местоположение" : "GPS Metadata: How It Reveals Your Location",
+      description: isRu
+        ? "Как встроенные координаты в фото позволяют злоумышленникам точно определить ваш домашний адрес."
+        : "Discover how GPS data in photos can pinpoint your exact location.",
+      href: "/blog/gps-metadata-danger/",
+      readTime: isRu ? "6 мин чтения" : "6 min read",
+    },
+  ];
+
+  const privacyGuarantees = isRu
+    ? [
+        t("home.guarantee_1"),
+        t("home.guarantee_2"),
+        t("home.guarantee_3"),
+        t("home.guarantee_4"),
+        t("home.guarantee_5"),
+      ]
+    : [
+        "Zero server uploads — ever",
+        "No cookies or tracking",
+        "No data collection",
+        "Open-source code",
+        "Works offline after first load",
+      ];
+
   return (
     <>
       <JsonLd data={generateWebApplicationSchema()} />
@@ -139,16 +345,16 @@ export default function HomePage() {
           <div className="text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary mb-6">
               <span className="h-2 w-2 rounded-full bg-success animate-pulse"></span>
-              100% Client-Side Processing
+              {t("home.badge")}
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground">
-              Remove Metadata{" "}
-              <span className="text-primary">Instantly</span>
+              {t("home.hero_h1_prefix")}{" "}
+              <span className="text-primary">{t("home.hero_h1_highlight")}</span>
             </h1>
 
             <p className="mt-6 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
-              {siteConfig.description}
+              {t("home.hero_desc")}
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
@@ -159,7 +365,7 @@ export default function HomePage() {
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                Remove Photo Metadata
+                {t("home.btn_photo")}
               </Link>
               <Link
                 href="/remove-pdf-metadata/"
@@ -168,12 +374,17 @@ export default function HomePage() {
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                Remove PDF Metadata
+                {t("home.btn_pdf")}
               </Link>
             </div>
 
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              {["Client-Side", "No Uploads", "Private", "Free"].map((badge) => (
+              {[
+                t("home.badge_client"),
+                t("home.badge_no_uploads"),
+                t("home.badge_private"),
+                t("home.badge_free"),
+              ].map((badge) => (
                 <span
                   key={badge}
                   className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground"
@@ -193,83 +404,21 @@ export default function HomePage() {
       <section className="py-16 bg-muted/30">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground">Privacy Tools</h2>
-            <p className="mt-3 text-lg text-muted-foreground">Choose the right tool for your needs</p>
+            <h2 className="text-3xl font-bold text-foreground">{t("home.tools_title")}</h2>
+            <p className="mt-3 text-lg text-muted-foreground">{t("home.tools_desc")}</p>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <ToolCard
-              title="Photo Metadata Remover"
-              description="Remove EXIF data, GPS coordinates, camera info, and timestamps from images."
-              href="/remove-photo-metadata/"
-              icon={
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              }
-              features={["JPG, PNG, WEBP support", "Remove GPS data", "Remove camera info", "Before/after preview"]}
-            />
-
-            <ToolCard
-              title="GPS Remover"
-              description="Extract and display GPS coordinates. Remove location data to protect your privacy."
-              href="/remove-gps-from-photo/"
-              icon={
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              }
-              features={["Extract GPS coords", "Google Maps link", "Remove GPS only", "Privacy warnings"]}
-            />
-
-            <ToolCard
-              title="EXIF Viewer"
-              description="Inspect all metadata embedded in your photos. Searchable table with categories."
-              href="/exif-viewer/"
-              icon={
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              }
-              features={["Drag & drop", "Searchable fields", "Category filters", "Privacy score"]}
-            />
-
-            <ToolCard
-              title="Social Media Cleaner"
-              description="Analyze photos for privacy risks before posting. One-click clean for social media."
-              href="/social-media-cleaner/"
-              icon={
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m-9 0h10m-10 0H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2h-2" />
-                </svg>
-              }
-              features={["Device detection", "GPS warnings", "Date exposure", "One-click clean"]}
-            />
-
-            <ToolCard
-              title="Batch Metadata Remover"
-              description="Upload multiple files and clean metadata from all of them. Download as ZIP."
-              href="/batch-metadata-remover/"
-              icon={
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                </svg>
-              }
-              features={["Multiple files", "Progress tracking", "ZIP download", "Photo & PDF support"]}
-            />
-
-            <ToolCard
-              title="Privacy Score"
-              description="Calculate privacy score from 0-100. See detailed risk breakdown for your files."
-              href="/privacy-score-tool/"
-              icon={
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              }
-              features={["Score circle", "Risk level", "Detailed breakdown", "Issue detection"]}
-            />
+            {toolCards.map((card, idx) => (
+              <ToolCard
+                key={idx}
+                title={card.title}
+                description={card.description}
+                href={card.href}
+                icon={card.icon}
+                features={card.features}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -278,9 +427,9 @@ export default function HomePage() {
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground">Why Choose MetaClean?</h2>
+            <h2 className="text-3xl font-bold text-foreground">{t("home.why_title")}</h2>
             <p className="mt-3 text-lg text-muted-foreground">
-              Built with privacy as the foundation, not an afterthought
+              {t("home.why_desc")}
             </p>
           </div>
 
@@ -304,18 +453,12 @@ export default function HomePage() {
           <div className="rounded-2xl border border-border bg-white p-8 sm:p-12">
             <div className="grid gap-8 lg:grid-cols-2 items-center">
               <div>
-                <h2 className="text-3xl font-bold text-foreground">Your Files Stay Private</h2>
+                <h2 className="text-3xl font-bold text-foreground">{t("home.stay_private_title")}</h2>
                 <p className="mt-4 text-muted-foreground">
-                  Unlike other tools that upload your files to their servers, MetaClean processes everything directly in your browser using WebAssembly and modern JavaScript APIs.
+                  {t("home.stay_private_desc")}
                 </p>
                 <ul className="mt-6 space-y-4">
-                  {[
-                    "Zero server uploads — ever",
-                    "No cookies or tracking",
-                    "No data collection",
-                    "Open-source code",
-                    "Works offline after first load",
-                  ].map((item, index) => (
+                  {privacyGuarantees.map((item, index) => (
                     <li key={index} className="flex items-center gap-3">
                       <svg className="h-5 w-5 text-success shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -335,8 +478,8 @@ export default function HomePage() {
                       </svg>
                     </div>
                     <div>
-                      <p className="font-medium text-foreground">Before MetaClean</p>
-                      <p className="text-xs text-muted-foreground">Your files contain sensitive metadata</p>
+                      <p className="font-medium text-foreground">{t("home.before_metaclean")}</p>
+                      <p className="text-xs text-muted-foreground">{t("home.before_desc")}</p>
                     </div>
                   </div>
 
@@ -355,8 +498,8 @@ export default function HomePage() {
                       </svg>
                     </div>
                     <div>
-                      <p className="font-medium text-foreground">After MetaClean</p>
-                      <p className="text-xs text-muted-foreground">Metadata removed, content preserved</p>
+                      <p className="font-medium text-foreground">{t("home.after_metaclean")}</p>
+                      <p className="text-xs text-muted-foreground">{t("home.after_desc")}</p>
                     </div>
                   </div>
 
@@ -378,8 +521,8 @@ export default function HomePage() {
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground">How It Works</h2>
-            <p className="mt-3 text-lg text-muted-foreground">Three simple steps to protect your privacy</p>
+            <h2 className="text-3xl font-bold text-foreground">{t("home.how_title")}</h2>
+            <p className="mt-3 text-lg text-muted-foreground">{t("home.how_desc")}</p>
           </div>
 
           <div className="grid gap-8 sm:grid-cols-3">
@@ -405,31 +548,12 @@ export default function HomePage() {
       <section className="py-16 bg-muted/30">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground">Privacy Resources</h2>
-            <p className="mt-3 text-lg text-muted-foreground">Learn how to protect your digital privacy</p>
+            <h2 className="text-3xl font-bold text-foreground">{t("home.resources_title")}</h2>
+            <p className="mt-3 text-lg text-muted-foreground">{t("home.resources_desc")}</p>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                title: "How to Remove EXIF Data From Photos",
-                description: "A complete guide to removing hidden metadata from your photos before sharing online.",
-                href: "/blog/how-to-remove-exif-data/",
-                readTime: "5 min read",
-              },
-              {
-                title: "Why Photo Metadata Can Be Dangerous",
-                description: "Learn how metadata in your photos can expose sensitive information about you.",
-                href: "/blog/photo-metadata-danger/",
-                readTime: "7 min read",
-              },
-              {
-                title: "GPS Metadata: How It Reveals Your Location",
-                description: "Discover how GPS data in photos can pinpoint your exact location.",
-                href: "/blog/gps-metadata-danger/",
-                readTime: "6 min read",
-              },
-            ].map((post, index) => (
+            {blogPosts.map((post, index) => (
               <Link
                 key={index}
                 href={post.href}
@@ -441,7 +565,7 @@ export default function HomePage() {
                 </h3>
                 <p className="mt-2 text-sm text-muted-foreground">{post.description}</p>
                 <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary">
-                  Read more
+                  {t("ui.read_more")}
                   <svg className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
@@ -456,8 +580,8 @@ export default function HomePage() {
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <FAQSection
-            title="Frequently Asked Questions"
-            description="Everything you need to know about MetaClean and metadata removal"
+            title={t("faq.title")}
+            description={t("faq.desc")}
             faqs={faqs}
           />
         </div>
@@ -466,16 +590,16 @@ export default function HomePage() {
       {/* CTA Section */}
       <section className="py-16 bg-primary">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white">Ready to Protect Your Privacy?</h2>
+          <h2 className="text-3xl font-bold text-white">{t("home.cta_title")}</h2>
           <p className="mt-4 text-lg text-white/80 max-w-2xl mx-auto">
-            Start removing metadata from your files in seconds. No signup required.
+            {t("home.cta_desc")}
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/remove-photo-metadata/"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-8 py-3.5 text-base font-semibold text-primary hover:bg-white/90 transition-all"
             >
-              Get Started Free
+              {t("home.cta_btn")}
             </Link>
           </div>
         </div>

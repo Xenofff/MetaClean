@@ -2,12 +2,38 @@
 
 import { useState, useEffect } from "react";
 import { type PrivacyScoreResult, getScoreColor, getScoreBgColor } from "@/lib/privacy-score";
+import { useLanguage } from "@/lib/i18n/context";
 
 interface PrivacyScoreComponentProps {
   metadata: Record<string, unknown>;
 }
 
+const RU_CATEGORIES: Record<string, { title: string; desc: string }> = {
+  "GPS Location": {
+    title: "GPS-локация",
+    desc: "GPS-координаты раскрывают точное место съемки",
+  },
+  "Device Information": {
+    title: "Данные устройства",
+    desc: "Модель и производитель устройства позволяют идентифицировать вас",
+  },
+  Timestamp: {
+    title: "Временные метки",
+    desc: "Дата и время показывают, когда был создан файл",
+  },
+  "Author Information": {
+    title: "Информация об авторе",
+    desc: "Имя автора связывает файл с вашей личностью",
+  },
+  "Software Tags": {
+    title: "Метки софта",
+    desc: "Информация об используемых программах и инструментах",
+  },
+};
+
 export default function PrivacyScoreComponent({ metadata }: PrivacyScoreComponentProps) {
+  const { lang, t } = useLanguage();
+  const isRu = lang === "ru";
   const [scoreResult, setScoreResult] = useState<PrivacyScoreResult | null>(null);
 
   useEffect(() => {
@@ -25,7 +51,7 @@ export default function PrivacyScoreComponent({ metadata }: PrivacyScoreComponen
   return (
     <div className="rounded-xl border border-border overflow-hidden">
       <div className="border-b border-border bg-muted/50 px-6 py-4">
-        <h3 className="text-sm font-semibold text-foreground">Privacy Score</h3>
+        <h3 className="text-sm font-semibold text-foreground">{t("risk.score_title")}</h3>
       </div>
       <div className="p-6">
         <div className="flex items-center gap-6 mb-6">
@@ -33,7 +59,7 @@ export default function PrivacyScoreComponent({ metadata }: PrivacyScoreComponen
             <span className={`text-2xl font-bold ${getScoreColor(score)}`}>{score}</span>
           </div>
           <div>
-            <p className="text-sm text-muted-foreground">Grade</p>
+            <p className="text-sm text-muted-foreground">{t("risk.grade")}</p>
             <p className={`text-3xl font-bold ${getScoreColor(score)}`}>{grade}</p>
           </div>
           <div className="flex-1">
@@ -50,32 +76,40 @@ export default function PrivacyScoreComponent({ metadata }: PrivacyScoreComponen
 
         {issues.length > 0 && (
           <div className="space-y-3">
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Issues Found</p>
-            {issues.map((issue, index) => (
-              <div
-                key={index}
-                className="flex items-start gap-3 rounded-lg border border-border p-3"
-              >
-                <span
-                  className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${
-                    issue.severity === "critical"
-                      ? "bg-danger/10 text-danger"
-                      : issue.severity === "high"
-                      ? "bg-orange-100 text-orange-600"
-                      : "bg-warning/10 text-warning"
-                  }`}
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+              {t("risk.issues_found")}
+            </p>
+            {issues.map((issue, index) => {
+              const ruInfo = RU_CATEGORIES[issue.category];
+              const displayCategory = isRu && ruInfo ? ruInfo.title : issue.category;
+              const displayDesc = isRu && ruInfo ? ruInfo.desc : issue.description;
+
+              return (
+                <div
+                  key={index}
+                  className="flex items-start gap-3 rounded-lg border border-border p-3"
                 >
-                  <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                  </svg>
-                </span>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-foreground">{issue.category}</p>
-                  <p className="text-xs text-muted-foreground">{issue.description}</p>
+                  <span
+                    className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${
+                      issue.severity === "critical"
+                        ? "bg-danger/10 text-danger"
+                        : issue.severity === "high"
+                        ? "bg-orange-100 text-orange-600"
+                        : "bg-warning/10 text-warning"
+                    }`}
+                  >
+                    <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                  </span>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-foreground">{displayCategory}</p>
+                    <p className="text-xs text-muted-foreground">{displayDesc}</p>
+                  </div>
+                  <span className="text-xs font-medium text-danger">-{issue.penalty} pts</span>
                 </div>
-                <span className="text-xs font-medium text-danger">-{issue.penalty} pts</span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 
@@ -84,7 +118,9 @@ export default function PrivacyScoreComponent({ metadata }: PrivacyScoreComponen
             <svg className="h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <p className="text-sm font-medium text-success">No privacy issues detected</p>
+            <p className="text-sm font-medium text-success">
+              {isRu ? "Угроз приватности не обнаружено" : "No privacy issues detected"}
+            </p>
           </div>
         )}
       </div>

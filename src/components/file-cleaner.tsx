@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/i18n/context";
 
 interface FileCleanerProps {
   file: File;
@@ -10,6 +11,7 @@ interface FileCleanerProps {
 }
 
 export default function FileCleaner({ file, onClean, onCleaned }: FileCleanerProps) {
+  const { t } = useLanguage();
   const [isProcessing, setIsProcessing] = useState(false);
   const [cleanedBlob, setCleanedBlob] = useState<Blob | null>(null);
 
@@ -47,14 +49,14 @@ export default function FileCleaner({ file, onClean, onCleaned }: FileCleanerPro
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
             </svg>
-            Processing...
+            {t("ui.processing")}
           </>
         ) : (
           <>
             <svg className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
-            Clean File
+            {t("ui.clean_file")}
           </>
         )}
       </Button>
@@ -63,7 +65,7 @@ export default function FileCleaner({ file, onClean, onCleaned }: FileCleanerPro
           <svg className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
           </svg>
-          Download
+          {t("ui.download")}
         </Button>
       )}
     </div>

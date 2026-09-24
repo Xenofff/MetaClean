@@ -11,6 +11,7 @@ import {
 } from "@/lib/metadata/image-processor";
 import { removePDFMetadata } from "@/lib/metadata/pdf-processor";
 import { generateBreadcrumbSchema } from "@/lib/schema";
+import { useLanguage } from "@/lib/i18n/context";
 
 interface BatchFile {
   id: string;
@@ -21,14 +22,15 @@ interface BatchFile {
 }
 
 export default function BatchMetadataRemoverPage() {
+  const { lang } = useLanguage();
   const [batchFiles, setBatchFiles] = useState<BatchFile[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "/" },
-    { name: "Batch Metadata Remover", url: "/batch-metadata-remover/" },
+    { name: lang === "ru" ? "Главная" : "Home", url: "/" },
+    { name: lang === "ru" ? "Пакетная очистка метаданных" : "Batch Metadata Remover", url: "/batch-metadata-remover/" },
   ]);
 
   const addFiles = useCallback((files: File[]) => {
@@ -170,9 +172,13 @@ export default function BatchMetadataRemoverPage() {
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8" aria-label="Breadcrumb">
-          <Link href="/" className="hover:text-foreground">Home</Link>
+          <Link href="/" className="hover:text-foreground">
+            {lang === "ru" ? "Главная" : "Home"}
+          </Link>
           <span>/</span>
-          <span className="text-foreground">Batch Metadata Remover</span>
+          <span className="text-foreground">
+            {lang === "ru" ? "Пакетная очистка метаданных" : "Batch Metadata Remover"}
+          </span>
         </nav>
 
         <div className="text-center mb-12">
@@ -180,13 +186,15 @@ export default function BatchMetadataRemoverPage() {
             <svg className="h-3.5 w-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
             </svg>
-            Batch Tool
+            {lang === "ru" ? "Пакетная обработка" : "Batch Tool"}
           </Badge>
           <h1 className="text-3xl sm:text-4xl font-bold text-foreground">
-            Batch Metadata Remover
+            {lang === "ru" ? "Пакетное удаление метаданных" : "Batch Metadata Remover"}
           </h1>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Upload multiple files and clean metadata from all of them at once. Download individually or as a ZIP.
+            {lang === "ru"
+              ? "Загрузите несколько файлов и удалите метаданные со всех одновременно. Скачайте по отдельности или единым ZIP-архивом."
+              : "Upload multiple files and clean metadata from all of them at once. Download individually or as a ZIP."}
           </p>
         </div>
 
@@ -208,7 +216,7 @@ export default function BatchMetadataRemoverPage() {
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") inputRef.current?.click();
             }}
-            aria-label="Upload files"
+            aria-label={lang === "ru" ? "Загрузить файлы" : "Upload files"}
           >
             <input
               ref={inputRef}
@@ -226,8 +234,12 @@ export default function BatchMetadataRemoverPage() {
                 </svg>
               </div>
               <div>
-                <p className="text-base font-medium text-foreground">Drop files here or click to browse</p>
-                <p className="text-sm text-muted-foreground mt-1">Supports JPG, PNG, WEBP, PDF</p>
+                <p className="text-base font-medium text-foreground">
+                  {lang === "ru" ? "Перетащите файлы сюда или нажмите для выбора" : "Drop files here or click to browse"}
+                </p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  {lang === "ru" ? "Поддерживаются JPG, PNG, WEBP, PDF" : "Supports JPG, PNG, WEBP, PDF"}
+                </p>
               </div>
             </div>
           </div>
@@ -236,8 +248,12 @@ export default function BatchMetadataRemoverPage() {
           {totalCount > 0 && (
             <div className="rounded-xl border border-border bg-card p-4">
               <div className="flex items-center justify-between mb-2">
-                <h3 className="text-sm font-semibold text-foreground">Progress</h3>
-                <span className="text-xs text-muted-foreground">{completedCount}/{totalCount} files</span>
+                <h3 className="text-sm font-semibold text-foreground">
+                  {lang === "ru" ? "Прогресс" : "Progress"}
+                </h3>
+                <span className="text-xs text-muted-foreground">
+                  {completedCount}/{totalCount} {lang === "ru" ? "файлов" : "files"}
+                </span>
               </div>
               <div className="h-2 rounded-full bg-muted overflow-hidden">
                 <div
@@ -252,17 +268,23 @@ export default function BatchMetadataRemoverPage() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                     </svg>
-                    {processingCount} processing
+                    {processingCount} {lang === "ru" ? "обрабатывается" : "processing"}
                   </span>
                 )}
                 {completedCount > 0 && (
-                  <span className="text-xs text-success">{completedCount} completed</span>
+                  <span className="text-xs text-success">
+                    {completedCount} {lang === "ru" ? "завершено" : "completed"}
+                  </span>
                 )}
                 {pendingCount > 0 && (
-                  <span className="text-xs text-muted-foreground">{pendingCount} pending</span>
+                  <span className="text-xs text-muted-foreground">
+                    {pendingCount} {lang === "ru" ? "в очереди" : "pending"}
+                  </span>
                 )}
                 {errorCount > 0 && (
-                  <span className="text-xs text-danger">{errorCount} errors</span>
+                  <span className="text-xs text-danger">
+                    {errorCount} {lang === "ru" ? "ошибок" : "errors"}
+                  </span>
                 )}
               </div>
             </div>
@@ -272,13 +294,15 @@ export default function BatchMetadataRemoverPage() {
           {batchFiles.length > 0 && (
             <div className="rounded-xl border border-border overflow-hidden">
               <div className="border-b border-border bg-muted/50 px-4 py-3 flex items-center justify-between">
-                <h3 className="text-sm font-semibold text-foreground">Files ({totalCount})</h3>
+                <h3 className="text-sm font-semibold text-foreground">
+                  {lang === "ru" ? "Файлы" : "Files"} ({totalCount})
+                </h3>
                 <button
                   onClick={clearAll}
                   className="text-xs text-muted-foreground hover:text-foreground"
-                  aria-label="Clear all files"
+                  aria-label={lang === "ru" ? "Очистить список файлов" : "Clear all files"}
                 >
-                  Clear All
+                  {lang === "ru" ? "Очистить все" : "Clear All"}
                 </button>
               </div>
               <div className="divide-y divide-border max-h-96 overflow-y-auto">
@@ -304,7 +328,7 @@ export default function BatchMetadataRemoverPage() {
                     <div className="flex items-center gap-2">
                       {batchFile.status === "pending" && (
                         <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-2 py-1 text-xs font-medium text-muted-foreground">
-                          Pending
+                          {lang === "ru" ? "В очереди" : "Pending"}
                         </span>
                       )}
                       {batchFile.status === "processing" && (
@@ -313,7 +337,7 @@ export default function BatchMetadataRemoverPage() {
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                           </svg>
-                          Processing
+                          {lang === "ru" ? "Обработка..." : "Processing"}
                         </span>
                       )}
                       {batchFile.status === "completed" && (
@@ -321,18 +345,18 @@ export default function BatchMetadataRemoverPage() {
                           <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                           </svg>
-                          Done
+                          {lang === "ru" ? "Готово" : "Done"}
                         </span>
                       )}
                       {batchFile.status === "error" && (
                         <span className="inline-flex items-center gap-1.5 rounded-full bg-danger/10 px-2 py-1 text-xs font-medium text-danger">
-                          Error
+                          {lang === "ru" ? "Ошибка" : "Error"}
                         </span>
                       )}
                       <button
                         onClick={() => removeFile(batchFile.id)}
                         className="p-1 text-muted-foreground hover:text-foreground rounded"
-                        aria-label={`Remove ${batchFile.file.name}`}
+                        aria-label={lang === "ru" ? `Удалить ${batchFile.file.name}` : `Remove ${batchFile.file.name}`}
                       >
                         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -353,7 +377,7 @@ export default function BatchMetadataRemoverPage() {
                   <svg className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  Clean All Files
+                  {lang === "ru" ? "Очистить все файлы" : "Clean All Files"}
                 </Button>
               )}
               {completedCount > 0 && (
@@ -362,7 +386,7 @@ export default function BatchMetadataRemoverPage() {
                     <svg className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
-                    Download ZIP ({completedCount})
+                    {lang === "ru" ? `Скачать ZIP (${completedCount})` : `Download ZIP (${completedCount})`}
                   </Button>
                 </>
               )}

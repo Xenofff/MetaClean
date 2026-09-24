@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/lib/i18n/context";
 
 interface ToolCardProps {
   title: string;
@@ -11,6 +14,8 @@ interface ToolCardProps {
 }
 
 export default function ToolCard({ title, description, href, icon, features, className }: ToolCardProps) {
+  const { t } = useLanguage();
+
   return (
     <Link
       href={href}
@@ -43,7 +48,7 @@ export default function ToolCard({ title, description, href, icon, features, cla
       )}
 
       <div className="mt-4 flex items-center gap-1 text-sm font-medium text-primary">
-        Get Started
+        {t("ui.get_started")}
         <svg className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
