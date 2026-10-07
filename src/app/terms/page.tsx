@@ -1,20 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { siteConfig } from "@/lib/schema";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/terms/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Terms of Service",
+  title: metaRu?.title || "Условия использования — MetaClean",
   description:
-    "MetaClean Terms of Service. Read the terms governing your use of MetaClean's free, client-side metadata removal tools.",
-  keywords: ["terms of service", "terms and conditions", "legal", "metaclean"],
+    metaRu?.desc ||
+    "Условия использования бесплатных клиентских инструментов удаления метаданных MetaClean.",
+  keywords: ["условия использования", "пользовательское соглашение", "правила сервиса", "metaclean"],
   alternates: {
     canonical: `${siteConfig.url}/terms`,
   },
   openGraph: {
-    title: "Terms of Service — MetaClean",
-    description: "Terms governing your use of MetaClean's free, client-side metadata removal tools.",
+    title: metaRu?.title || "Условия использования — MetaClean",
+    description: metaRu?.desc || "Условия использования бесплатных клиентских инструментов удаления метаданных MetaClean.",
     url: `${siteConfig.url}/terms`,
     siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

@@ -2,27 +2,33 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/json-ld";
 import { siteConfig, generateOrganizationSchema } from "@/lib/schema";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/about/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "About MetaClean — Privacy-First Metadata Removal",
+  title: metaRu?.title || "О MetaClean — Защита приватности через локальную очистку данных",
   description:
-    "Learn about MetaClean's mission to protect digital privacy through free, client-side metadata removal tools. Your files never leave your device.",
+    metaRu?.desc ||
+    "Миссия MetaClean: защита конфиденциальности с помощью бесплатных браузерных инструментов. Файлы никогда не передаются на сервер.",
   keywords: [
-    "about metaclean",
-    "metadata removal",
-    "privacy tool",
-    "client-side processing",
-    "free privacy tool",
+    "о metaclean",
+    "удаление метаданных",
+    "инструмент приватности",
+    "обработка в браузере",
+    "бесплатная защита данных",
   ],
   alternates: {
     canonical: `${siteConfig.url}/about`,
   },
   openGraph: {
-    title: "About MetaClean",
+    title: metaRu?.title || "О MetaClean",
     description:
-      "Learn about MetaClean's mission to protect digital privacy through free, client-side metadata removal tools.",
+      metaRu?.desc ||
+      "Миссия MetaClean: защита конфиденциальности с помощью бесплатных браузерных инструментов.",
     url: `${siteConfig.url}/about`,
     siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

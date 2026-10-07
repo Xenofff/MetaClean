@@ -9,7 +9,7 @@ import { TRANSLATION_MAP, PAGE_METADATA } from "./dictionary";
 const LanguageContext = createContext<I18nContextType | null>(null);
 
 function detectSystemLanguage(): Language {
-  if (typeof window === "undefined") return "en";
+  if (typeof window === "undefined") return "ru";
   try {
     const stored = localStorage.getItem("metaclean_lang");
     if (stored === "ru" || stored === "en") {
@@ -17,17 +17,17 @@ function detectSystemLanguage(): Language {
     }
     const navLangs = navigator.languages || [navigator.language];
     for (const lang of navLangs) {
-      if (/^ru\b/i.test(lang)) {
-        return "ru";
-      }
       if (/^en\b/i.test(lang)) {
         return "en";
+      }
+      if (/^ru\b/i.test(lang)) {
+        return "ru";
       }
     }
   } catch (e) {
     console.error("Language detection error:", e);
   }
-  return "en";
+  return "ru";
 }
 
 const PLACEHOLDER_MAP: Record<string, string> = {
@@ -44,7 +44,7 @@ const PLACEHOLDER_MAP: Record<string, string> = {
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const currentPath = usePathname();
-  const [lang, setLangState] = useState<Language>("en");
+  const [lang, setLangState] = useState<Language>("ru");
   const [mounted, setMounted] = useState(false);
   const originalTexts = useRef<Map<Node, string>>(new Map());
 
@@ -188,11 +188,11 @@ export function useLanguage(): I18nContextType {
   const context = useContext(LanguageContext);
   if (!context) {
     return {
-      lang: "en",
+      lang: "ru",
       setLang: () => {},
       toggleLang: () => {},
       t: (key: string, params?: Record<string, string | number>) => {
-        let val = TRANSLATIONS.en[key] || key;
+        let val = TRANSLATIONS.ru[key] || TRANSLATIONS.en[key] || key;
         if (params) {
           Object.entries(params).forEach(([k, v]) => {
             val = val.replace(new RegExp(`\\{${k}\\}`, "g"), String(v));

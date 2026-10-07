@@ -23,7 +23,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: `${siteConfig.name} — Remove Metadata Instantly | Private & Client-Side`,
+    default: `${siteConfig.name} — Мгновенное удаление метаданных | Приватно и в браузере`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -59,10 +59,10 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "en_US",
+    locale: "ru_RU",
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: siteConfig.name,
+    title: `${siteConfig.name} — Мгновенное удаление метаданных онлайн`,
     description: siteConfig.description,
     images: [
       {
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: siteConfig.name,
+    title: `${siteConfig.name} — Мгновенное удаление метаданных онлайн`,
     description: siteConfig.description,
     images: [siteConfig.ogImage],
   },
@@ -90,7 +90,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+      <html lang="ru" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <head>
         <meta name="theme-color" content="#635BFF" />
         <meta name="msapplication-TileColor" content="#635BFF" />
@@ -99,7 +99,7 @@ export default function RootLayout({
         {/* Immediate system language detector */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var s=localStorage.getItem('metaclean_lang');var n=(navigator.languages&&navigator.languages[0])||navigator.language||'';var l=(s==='ru'||s==='en')?s:(/^ru\\b/i.test(n)?'ru':'en');document.documentElement.lang=l;if(l==='ru'){document.documentElement.classList.add('lang-ru');}}catch(e){}})();`,
+            __html: `(function(){try{var s=localStorage.getItem('metaclean_lang');var n=(navigator.languages&&navigator.languages[0])||navigator.language||'';var l=(s==='ru'||s==='en')?s:(/^en\\b/i.test(n)?'en':'ru');document.documentElement.lang=l;if(l==='ru'){document.documentElement.classList.add('lang-ru');}else{document.documentElement.classList.remove('lang-ru');}}catch(e){}})();`,
           }}
         />
 

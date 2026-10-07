@@ -1,19 +1,19 @@
 export const siteConfig = {
   name: "MetaClean",
-  description: "Remove metadata from photos, PDFs, and text files instantly. All processing happens client-side — your files never leave your device.",
+  description: "Бесплатное удаление метаданных из фото, PDF и текста прямо в браузере. Защитите приватность перед отправкой файлов. Без загрузки на сервер.",
   url: "https://metaclean.site",
   ogImage: "https://metaclean.site/og.png",
   keywords: [
+    "удалить метаданные",
+    "удаление exif",
+    "очистка фото от метаданных",
+    "удалить метаданные pdf",
+    "приватность фото",
+    "удалить gps из фото",
+    "очистка метаданных онлайн",
+    "удалить метаданные бесплатно",
     "remove metadata",
     "EXIF remover",
-    "photo metadata cleaner",
-    "PDF metadata remover",
-    "privacy tool",
-    "client-side processing",
-    "GPS remover",
-    "metadata cleaner",
-    "online metadata remover",
-    "free privacy tool",
   ],
 };
 
@@ -29,15 +29,15 @@ export function generateWebApplicationSchema() {
     offers: {
       "@type": "Offer",
       price: "0",
-      priceCurrency: "USD",
+      priceCurrency: "RUB",
     },
     featureList: [
-      "Remove EXIF data from photos",
-      "Remove metadata from PDF files",
-      "Clean text files of hidden characters",
-      "Client-side processing",
-      "No file uploads",
-      "Privacy-first approach",
+      "Удаление EXIF-данных из фото",
+      "Удаление метаданных из PDF файлов",
+      "Очистка текста от скрытых символов",
+      "Обработка в браузере на клиенте",
+      "Без загрузки файлов на сервер",
+      "100% приватность и безопасность",
     ],
   };
 }

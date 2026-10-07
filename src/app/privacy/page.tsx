@@ -1,21 +1,27 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { siteConfig } from "@/lib/schema";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/privacy/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Privacy Policy",
+  title: metaRu?.title || "Политика конфиденциальности — MetaClean",
   description:
-    "MetaClean Privacy Policy. We collect no data. All processing happens client-side. Your files never leave your browser.",
-  keywords: ["privacy policy", "data protection", "no data collection", "client-side processing"],
+    metaRu?.desc ||
+    "MetaClean не собирает никаких данных. Вся обработка происходит на клиенте. Ваши файлы никогда не покидают браузер.",
+  keywords: ["политика конфиденциальности", "защита данных", "без сбора данных", "обработка в браузере"],
   alternates: {
     canonical: `${siteConfig.url}/privacy`,
   },
   openGraph: {
-    title: "Privacy Policy — MetaClean",
+    title: metaRu?.title || "Политика конфиденциальности — MetaClean",
     description:
-      "MetaClean collects no data. All processing happens client-side. Your files never leave your browser.",
+      metaRu?.desc ||
+      "MetaClean не собирает никаких данных. Вся обработка происходит на клиенте. Ваши файлы никогда не покидают браузер.",
     url: `${siteConfig.url}/privacy`,
     siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

@@ -2,14 +2,24 @@ import Link from "next/link";
 import JsonLd from "@/components/json-ld";
 import { generateBreadcrumbSchema, siteConfig } from "@/lib/schema";
 import { blogArticles } from "@/lib/blog-data";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
 import type { Metadata } from "next";
 
+const metaRu = PAGE_METADATA["/blog/"]?.ru;
+
 export const metadata: Metadata = {
-  title: "Blog — Privacy Tips & Metadata Removal Guides | MetaClean",
-  description: "Learn how to protect your digital privacy. Guides on removing metadata from photos, PDFs, and text files. Expert tips for online safety.",
-  keywords: ["privacy blog", "metadata removal guide", "EXIF data", "digital privacy tips", "photo privacy", "metadata security"],
+  title: metaRu?.title || "Блог — Руководства по приватности и очистке метаданных | MetaClean",
+  description: metaRu?.desc || "Статьи и инструкции по защите личных данных, удалению EXIF из фото, очистке PDF и цифровой безопасности.",
+  keywords: ["блог приватности", "руководство по удалению метаданных", "данные EXIF", "безопасность фото"],
   alternates: {
     canonical: `${siteConfig.url}/blog/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Блог MetaClean",
+    description: metaRu?.desc,
+    url: `${siteConfig.url}/blog/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

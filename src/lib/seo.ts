@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/schema";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
 
 interface PageSEO {
   title: string;
@@ -12,10 +13,14 @@ interface PageSEO {
 export function generatePageSEO(config: PageSEO): Metadata {
   const url = `${siteConfig.url}${config.canonical}`;
   const ogImage = config.ogImage || siteConfig.ogImage;
+  const pageMetaRu = PAGE_METADATA[config.canonical]?.ru;
+
+  const title = pageMetaRu?.title || config.title;
+  const description = pageMetaRu?.desc || config.description;
 
   return {
-    title: config.title,
-    description: config.description,
+    title,
+    description,
     keywords: config.keywords,
     authors: [{ name: "MetaClean" }],
     creator: "MetaClean",
@@ -33,24 +38,24 @@ export function generatePageSEO(config: PageSEO): Metadata {
     },
     openGraph: {
       type: "website",
-      locale: "en_US",
+      locale: "ru_RU",
       url,
       siteName: siteConfig.name,
-      title: config.title,
-      description: config.description,
+      title,
+      description,
       images: [
         {
           url: ogImage,
           width: 1200,
           height: 630,
-          alt: config.title,
+          alt: title,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: config.title,
-      description: config.description,
+      title,
+      description,
       images: [ogImage],
     },
     alternates: {

@@ -1,20 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { siteConfig } from "@/lib/schema";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/contact/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Contact Us",
+  title: metaRu?.title || "Связаться с нами — MetaClean",
   description:
-    "Get in touch with the MetaClean team. Questions, feedback, or support — we'd love to hear from you.",
-  keywords: ["contact metaclean", "support", "feedback", "help"],
+    metaRu?.desc ||
+    "Свяжитесь с командой MetaClean. Вопросы, отзывы или предложения — мы всегда рады обратной связи.",
+  keywords: ["контакты metaclean", "поддержка", "обратная связь", "помощь"],
   alternates: {
     canonical: `${siteConfig.url}/contact`,
   },
   openGraph: {
-    title: "Contact Us — MetaClean",
-    description: "Get in touch with the MetaClean team. Questions, feedback, or support.",
+    title: metaRu?.title || "Связаться с нами — MetaClean",
+    description: metaRu?.desc || "Свяжитесь с командой MetaClean. Вопросы, отзывы или предложения.",
     url: `${siteConfig.url}/contact`,
     siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

@@ -1,14 +1,24 @@
 import Link from "next/link";
 import JsonLd from "@/components/json-ld";
 import { generateBreadcrumbSchema, siteConfig } from "@/lib/schema";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
 import type { Metadata } from "next";
 
+const metaRu = PAGE_METADATA["/privacy-guide/"]?.ru;
+
 export const metadata: Metadata = {
-  title: "Privacy Guide - How to Protect Your Digital Privacy",
-  description: "Learn how metadata in your files can expose sensitive information and how to protect your privacy online. Complete guide to digital privacy protection.",
-  keywords: ["privacy guide", "digital privacy", "metadata privacy", "online privacy protection", "data privacy"],
+  title: metaRu?.title || "Руководство по приватности — Как защитить данные в сети | MetaClean",
+  description: metaRu?.desc || "Узнайте, как метаданные в файлах могут раскрыть конфиденциальную информацию и как защитить себя в интернете.",
+  keywords: ["руководство по приватности", "цифровая приватность", "приватность метаданных", "защита данных в сети"],
   alternates: {
     canonical: `${siteConfig.url}/privacy-guide/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Руководство по приватности — MetaClean",
+    description: metaRu?.desc,
+    url: `${siteConfig.url}/privacy-guide/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 
