@@ -3,13 +3,28 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/gps-metadata-danger/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "How GPS Metadata Reveals Your Location",
-  description: "Learn how GPS data embedded in your photos can reveal your exact location and how to remove it.",
-  keywords: ["GPS metadata", "location privacy", "photo GPS data", "location tracking"],
+  title: metaRu?.title || "How GPS Metadata Reveals Your Location",
+  description: metaRu?.desc || "Learn how GPS data embedded in your photos can reveal your exact location and how to remove it.",
+  keywords: [
+    "GPS-метаданные",
+    "приватность местоположения",
+    "GPS-данные в фото",
+    "отслеживание местоположения",
+  ],
   alternates: {
     canonical: `${siteConfig.url}/blog/gps-metadata-danger/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "How GPS Metadata Reveals Your Location",
+    description: metaRu?.desc || "Learn how GPS data embedded in your photos can reveal your exact location and how to remove it.",
+    url: `${siteConfig.url}/blog/gps-metadata-danger/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

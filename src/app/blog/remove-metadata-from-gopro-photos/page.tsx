@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/remove-metadata-from-gopro-photos/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Remove Metadata From GoPro Photos",
-  description:
-    "GoPro cameras record extensive metadata including GPS, gyroscope data, and telemetry. Learn what your action camera captures and how to strip it before sharing.",
+  title: metaRu?.title || "Remove Metadata From GoPro Photos",
+  description: metaRu?.desc || "GoPro cameras record extensive metadata including GPS, gyroscope data, and telemetry. Learn what your action camera captures and how to strip it before sharing.",
   keywords: [
-    "GoPro metadata",
-    "GoPro photo privacy",
-    "remove GoPro EXIF",
-    "action camera metadata",
-    "GoPro GPS data",
+    "метаданные GoPro",
+    "приватность фото GoPro",
+    "удалить EXIF GoPro",
+    "метаданные экшн-камеры",
+    "GPS-данные GoPro",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/remove-metadata-from-gopro-photos/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Remove Metadata From GoPro Photos",
+    description: metaRu?.desc || "GoPro cameras record extensive metadata including GPS, gyroscope data, and telemetry. Learn what your action camera captures and how to strip it before sharing.",
+    url: `${siteConfig.url}/blog/remove-metadata-from-gopro-photos/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

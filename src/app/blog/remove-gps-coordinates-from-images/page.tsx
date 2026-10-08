@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/remove-gps-coordinates-from-images/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Remove GPS Coordinates From Images",
-  description:
-    "Step-by-step guide to removing GPS coordinates from your photos. Learn how geotags get embedded, how to view them, and how to strip them before sharing.",
+  title: metaRu?.title || "Remove GPS Coordinates From Images",
+  description: metaRu?.desc || "Step-by-step guide to removing GPS coordinates from your photos. Learn how geotags get embedded, how to view them, and how to strip them before sharing.",
   keywords: [
-    "remove GPS coordinates",
-    "strip location from photo",
-    "geotag remover",
-    "remove geotag",
-    "GPS photo privacy",
+    "удалить GPS-координаты",
+    "убрать местоположение из фото",
+    "удаление геометок",
+    "как убрать геометку",
+    "приватность GPS в фото",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/remove-gps-coordinates-from-images/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Remove GPS Coordinates From Images",
+    description: metaRu?.desc || "Step-by-step guide to removing GPS coordinates from your photos. Learn how geotags get embedded, how to view them, and how to strip them before sharing.",
+    url: `${siteConfig.url}/blog/remove-gps-coordinates-from-images/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

@@ -3,13 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/remove-metadata-from-jpg-files/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Remove Metadata From JPG Files",
-  description: "Step-by-step guide to removing EXIF metadata from JPG and JPEG files. Learn how piexifjs processes JPG metadata and how to batch clean your photo collection.",
-  keywords: ["remove metadata from JPG", "JPG metadata remover", "JPEG EXIF removal", "strip EXIF from JPEG", "clean JPG files"],
+  title: metaRu?.title || "Remove Metadata From JPG Files",
+  description: metaRu?.desc || "Step-by-step guide to removing EXIF metadata from JPG and JPEG files. Learn how piexifjs processes JPG metadata and how to batch clean your photo collection.",
+  keywords: [
+    "удалить метаданные из JPG",
+    "удаление метаданных JPG",
+    "удаление EXIF из JPEG",
+    "очистка EXIF в JPEG",
+    "очистка файлов JPG",
+  ],
   alternates: {
     canonical: `${siteConfig.url}/blog/remove-metadata-from-jpg-files/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Remove Metadata From JPG Files",
+    description: metaRu?.desc || "Step-by-step guide to removing EXIF metadata from JPG and JPEG files. Learn how piexifjs processes JPG metadata and how to batch clean your photo collection.",
+    url: `${siteConfig.url}/blog/remove-metadata-from-jpg-files/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/remove-metadata-before-reddit/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Remove Metadata Before Uploading To Reddit",
-  description:
-    "Learn how Reddit handles photo metadata, what data survives upload, and how to remove EXIF data before posting to protect your privacy on Reddit.",
+  title: metaRu?.title || "Remove Metadata Before Uploading To Reddit",
+  description: metaRu?.desc || "Learn how Reddit handles photo metadata, what data survives upload, and how to remove EXIF data before posting to protect your privacy on Reddit.",
   keywords: [
-    "Reddit metadata privacy",
-    "remove EXIF Reddit",
-    "Reddit photo privacy",
-    "Reddit metadata stripping",
-    "clean photos for Reddit",
+    "приватность метаданных Reddit",
+    "удалить EXIF для Reddit",
+    "приватность фото Reddit",
+    "удаление метаданных в Reddit",
+    "очистка фото для Reddit",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/remove-metadata-before-reddit/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Remove Metadata Before Uploading To Reddit",
+    description: metaRu?.desc || "Learn how Reddit handles photo metadata, what data survives upload, and how to remove EXIF data before posting to protect your privacy on Reddit.",
+    url: `${siteConfig.url}/blog/remove-metadata-before-reddit/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

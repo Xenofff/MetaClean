@@ -1,3 +1,5 @@
+import { BLOG_TRANSLATIONS } from "./blog-translations";
+
 export interface PageMeta {
   title: string;
   desc: string;
@@ -154,9 +156,522 @@ export const PAGE_METADATA: Record<string, Record<"en" | "ru", PageMeta>> = {
       desc: "Статьи и инструкции по защите личных данных, удалению EXIF из фото, очистке PDF и цифровой безопасности.",
     },
   },
+  "/blog/android-photo-metadata-explained/": {
+    en: {
+      title: "Android Photo Metadata Explained",
+      desc: "Discover what metadata Android phones record in photos, how Samsung, Google Pixel, and other manufacturers handle location tags, and how to disable them.",
+    },
+    ru: {
+      title: "Метаданные фото на Android: что записывает телефон",
+      desc: "Узнайте, какие метаданные записывают смартфоны Android в фото, как Samsung, Google Pixel и другие бренды обрабатывают геометки и как их отключить.",
+    },
+  },
+  "/blog/batch-metadata-removal/": {
+    en: {
+      title: "Batch Metadata Removal: Clean Multiple Files at Once",
+      desc: "Learn how to remove metadata from multiple photos simultaneously with batch processing. Save time cleaning hundreds of files before sharing or publishing.",
+    },
+    ru: {
+      title: "Пакетное удаление метаданных: чистим все файлы разом",
+      desc: "Узнайте, как удалять метаданные сразу с нескольких фото с помощью пакетной обработки. Экономьте время и очищайте сотни файлов перед публикацией.",
+    },
+  },
+  "/blog/best-metadata-cleaner-tools/": {
+    en: {
+      title: "Best Free Metadata Cleaner Tools",
+      desc: "Compare the best free tools for removing metadata from photos, PDFs, and text files. Find the right tool for your privacy needs.",
+    },
+    ru: {
+      title: "Лучшие бесплатные очистители метаданных",
+      desc: "Сравните лучшие бесплатные инструменты для удаления метаданных из фото, PDF и текстов. Найдите подходящий инструмент для защиты своей приватности.",
+    },
+  },
+  "/blog/best-metadata-viewer-tools/": {
+    en: {
+      title: "Best Metadata Viewer Tools",
+      desc: "Compare the best metadata viewer tools for photos and documents. Find the right tool to check EXIF data, PDF properties, and hidden file information.",
+    },
+    ru: {
+      title: "Лучшие просмотрщики метаданных: сравнение",
+      desc: "Сравните лучшие инструменты для просмотра метаданных фото и документов. Выберите, чем проверить данные EXIF, свойства PDF и скрытую информацию файла.",
+    },
+  },
+  "/blog/can-metadata-reveal-home-address/": {
+    en: {
+      title: "Can Metadata Reveal Your Home Address",
+      desc: "GPS coordinates in photos can pinpoint your exact home address. Learn how metadata exposes your location and how to protect yourself from location tracking.",
+    },
+    ru: {
+      title: "Метаданные раскрывают ваш домашний адрес?",
+      desc: "GPS-координаты в фото указывают точный домашний адрес. Узнайте, как метаданные выдают ваше местоположение и как защититься от слежки по геоданным.",
+    },
+  },
+  "/blog/complete-photo-privacy-guide/": {
+    en: {
+      title: "Complete Photo Privacy Guide",
+      desc: "Master photo privacy with our comprehensive guide. Learn to remove metadata, configure platform settings, and develop safe sharing habits to protect your personal information.",
+    },
+    ru: {
+      title: "Полный гайд по приватности фотографий",
+      desc: "Освойте приватность фото с нашим подробным гайдом: удаление метаданных, настройка платформ и безопасный шаринг для защиты личной информации в интернете.",
+    },
+  },
+  "/blog/does-apple-strip-metadata/": {
+    en: {
+      title: "Does Apple Strip Metadata",
+      desc: "Find out how Apple handles photo metadata across iPhone, iPad, and Mac. Learn what metadata Apple strips, what it keeps, and what you can do to protect your privacy.",
+    },
+    ru: {
+      title: "Удаляет ли Apple метаданные из фото?",
+      desc: "Узнайте, как Apple обрабатывает метаданные на iPhone, iPad и Mac: какие данные EXIF она удаляет, какие оставляет и как защитить свою приватность.",
+    },
+  },
+  "/blog/does-google-strip-metadata/": {
+    en: {
+      title: "Does Google Strip Metadata",
+      desc: "Learn how Google handles photo metadata across Google Photos, Gmail, Drive, and Android. Understand what metadata Google strips and what it retains.",
+    },
+    ru: {
+      title: "Удаляет ли Google метаданные из фото?",
+      desc: "Узнайте, как Google работает с метаданными в Google Photos, Gmail, Drive и Android: какие данные EXIF платформа удаляет, а какие сохраняет у себя.",
+    },
+  },
+  "/blog/exif-viewer-guide/": {
+    en: {
+      title: "EXIF Viewer Guide",
+      desc: "How to use the MetaClean EXIF Viewer to inspect photo metadata. Learn to read EXIF categories, search fields, and interpret results for better privacy.",
+    },
+    ru: {
+      title: "Гайд по просмотру EXIF в MetaClean",
+      desc: "Как использовать инструмент MetaClean «Просмотр EXIF» для просмотра метаданных: разбираем категории EXIF, поля поиска и трактовку результатов для приватности.",
+    },
+  },
+  "/blog/gps-metadata-danger/": {
+    en: {
+      title: "How GPS Metadata Reveals Your Location",
+      desc: "Learn how GPS data embedded in your photos can reveal your exact location and how to remove it.",
+    },
+    ru: {
+      title: "Как GPS-метаданные выдают ваше местоположение",
+      desc: "Узнайте, как GPS-данные, встроенные в ваши фото, раскрывают точное местоположение, и как удалить геоданные из снимков перед публикацией в интернете.",
+    },
+  },
+  "/blog/how-companies-track-metadata/": {
+    en: {
+      title: "How Companies Track Metadata",
+      desc: "Companies collect and analyze metadata from your photos, documents, and devices. Learn how corporate metadata tracking works and how to protect yourself.",
+    },
+    ru: {
+      title: "Как компании отслеживают метаданные",
+      desc: "Компании собирают и анализируют метаданные ваших фото, документов и устройств. Узнайте, как работает корпоративный сбор метаданных и как защититься.",
+    },
+  },
+  "/blog/how-investigators-use-metadata/": {
+    en: {
+      title: "How Investigators Use Metadata",
+      desc: "Digital forensics investigators use metadata to track suspects, verify evidence, and reconstruct events. Learn how metadata analysis works in investigations.",
+    },
+    ru: {
+      title: "Как следователи используют метаданные",
+      desc: "Следователи цифровой криминалистики используют метаданные для поиска подозреваемых, проверки улик и восстановления событий. Разбираем, как это работает.",
+    },
+  },
+  "/blog/how-journalists-remove-metadata/": {
+    en: {
+      title: "How Journalists Remove Metadata",
+      desc: "Journalists face unique metadata risks when protecting sources. Learn how media professionals strip EXIF data from photos and documents to safeguard confidential information.",
+    },
+    ru: {
+      title: "Как журналисты удаляют метаданные",
+      desc: "Журналисты рискуют, защищая источники. Узнайте, как медиапрофессионалы удаляют данные EXIF из фото и документов, чтобы сохранить конфиденциальность.",
+    },
+  },
+  "/blog/how-to-check-metadata-online/": {
+    en: {
+      title: "How To Check Metadata Online",
+      desc: "Learn how to view and analyze metadata in your photos and documents using online tools. Check what hidden data your files reveal before sharing them.",
+    },
+    ru: {
+      title: "Как проверить метаданные онлайн",
+      desc: "Узнайте, как просматривать и анализировать метаданные в фото и документах с помощью онлайн-инструментов. Проверьте скрытые данные файлов перед шарингом.",
+    },
+  },
+  "/blog/how-to-hide-photo-location/": {
+    en: {
+      title: "How To Hide Photo Location",
+      desc: "Practical tips for hiding your photo location. Learn multiple methods to protect your location privacy when sharing photos online.",
+    },
+    ru: {
+      title: "Как скрыть местоположение на фото",
+      desc: "Практические советы по скрытию геометки фото. Узнайте несколько способов защитить приватность местоположения при публикации фотографий в интернете.",
+    },
+  },
+  "/blog/how-to-read-exif-data/": {
+    en: {
+      title: "How To Read EXIF Data",
+      desc: "Learn how to read and interpret EXIF metadata fields in your photos. Understand camera settings, GPS coordinates, timestamps, and other embedded data.",
+    },
+    ru: {
+      title: "Как читать данные EXIF: подробный гайд",
+      desc: "Учитесь читать и понимать поля данных EXIF в фото: настройки камеры, GPS-координаты, метки времени и другие встроенные данные простым языком.",
+    },
+  },
+  "/blog/how-to-remove-exif-data/": {
+    en: {
+      title: "How to Remove EXIF Data From Photos",
+      desc: "Learn how to remove hidden EXIF metadata from your photos before sharing online. Step-by-step guide to protect your privacy.",
+    },
+    ru: {
+      title: "Как удалить данные EXIF из фото",
+      desc: "Пошаговый гайд по удалению скрытых данных EXIF из ваших фото перед публикацией в интернете. Несколько простых способов защитить свою приватность.",
+    },
+  },
+  "/blog/how-to-remove-metadata-from-screenshots/": {
+    en: {
+      title: "How To Remove Metadata From Screenshots",
+      desc: "Screenshots often contain hidden metadata including device info, timestamps, and app data. Learn how to clean screenshots before sharing to protect your privacy.",
+    },
+    ru: {
+      title: "Как удалить метаданные со скриншотов",
+      desc: "Скриншоты часто содержат скрытые метаданные: данные устройства, время создания и сведения о приложении. Узнайте, как очистить их перед публикацией.",
+    },
+  },
+  "/blog/iphone-photo-metadata-explained/": {
+    en: {
+      title: "iPhone Photo Metadata Explained",
+      desc: "Learn what metadata your iPhone records in every photo, how GPS coordinates are embedded, and how to disable location tracking on iOS.",
+    },
+    ru: {
+      title: "Метаданные фото на iPhone: что записывает iOS",
+      desc: "Узнайте, какие метаданные записывает iPhone в каждое фото, как встраиваются GPS-координаты и как отключить отслеживание местоположения на iOS.",
+    },
+  },
+  "/blog/metadata-and-cybersecurity/": {
+    en: {
+      title: "Metadata And Cybersecurity",
+      desc: "Metadata creates cybersecurity risks from reconnaissance to data breaches. Learn how attackers exploit metadata and how to defend against these threats.",
+    },
+    ru: {
+      title: "Метаданные и кибербезопасность",
+      desc: "Метаданные создают риски для кибербезопасности — от разведки до утечек данных. Узнайте, как злоумышленники эксплуатируют метаданные и как защититься.",
+    },
+  },
+  "/blog/metadata-and-gdpr/": {
+    en: {
+      title: "Metadata And GDPR",
+      desc: "GDPR classifies metadata as personal data in many contexts. Learn how European privacy regulations apply to photo and document metadata and how to stay compliant.",
+    },
+    ru: {
+      title: "Метаданные и GDPR: что нужно знать",
+      desc: "GDPR классифицирует метаданные как персональные данные во многих случаях. Узнайте, как европейские законы о приватности применяются к фото и документам.",
+    },
+  },
+  "/blog/metadata-and-privacy-laws/": {
+    en: {
+      title: "Metadata And Privacy Laws",
+      desc: "Privacy regulations worldwide address metadata differently. Learn how global privacy laws treat photo and document metadata and what compliance means for individuals and businesses.",
+    },
+    ru: {
+      title: "Метаданные и законы о приватности",
+      desc: "Законы о приватности в мире по-разному регулируют метаданные. Узнайте, как их трактуют для фото и документов и что это значит для людей и бизнеса.",
+    },
+  },
+  "/blog/metadata-cleaner-guide/": {
+    en: {
+      title: "Metadata Cleaner Guide",
+      desc: "Complete tutorial for all MetaClean tools. Learn how to remove metadata from photos, PDFs, and text files with step-by-step instructions and tips.",
+    },
+    ru: {
+      title: "Полный гайд по очистке метаданных в MetaClean",
+      desc: "Полное руководство по всем инструментам MetaClean: как удалить метаданные из фото, PDF и текстовых файлов — подробные пошаговые инструкции и советы.",
+    },
+  },
+  "/blog/metadata-in-drones-photos/": {
+    en: {
+      title: "Metadata In Drone Photos",
+      desc: "Drone photos contain extensive metadata including GPS, altitude, gimbal data, and flight information. Learn what your drone records and how to protect your privacy.",
+    },
+    ru: {
+      title: "Метаданные в фото с дронов",
+      desc: "Фото с дронов содержат много метаданных: GPS, высоту, данные гимбала и сведения о полёте. Узнайте, что записывает ваш дрон, и защитите приватность.",
+    },
+  },
+  "/blog/metadata-security-risks/": {
+    en: {
+      title: "Metadata Security Risks",
+      desc: "Discover the real security risks of metadata — from stalking and burglary to social engineering and identity theft. Learn how hidden data in your files can be exploited.",
+    },
+    ru: {
+      title: "Риски безопасности метаданных в файлах",
+      desc: "Реальные угрозы метаданных: преследование, кража, социальная инженерия и мошенничество с личностью. Узнайте, как используются скрытые данные файлов.",
+    },
+  },
+  "/blog/photo-metadata-danger/": {
+    en: {
+      title: "Why Photo Metadata Can Be Dangerous",
+      desc: "Learn how metadata in your photos can expose sensitive information and put your privacy at risk.",
+    },
+    ru: {
+      title: "Чем опасны метаданные в фотографиях",
+      desc: "Узнайте, как метаданные в ваших фото раскрывают чувствительную информацию и ставят под угрозу вашу приватность в интернете, и как этого избежать.",
+    },
+  },
+  "/blog/photo-metadata-for-ecommerce/": {
+    en: {
+      title: "Photo Metadata For Ecommerce",
+      desc: "Why ecommerce sellers should remove photo metadata from product images. Protect your supply chain, supplier relationships, and pricing strategies.",
+    },
+    ru: {
+      title: "Метаданные фото для интернет-магазинов",
+      desc: "Узнайте, почему продавцам в интернет-магазине важно удалять метаданные из товарных фото. Защитите цепочку поставок, партнёров и ценообразование.",
+    },
+  },
+  "/blog/photo-metadata-for-real-estate/": {
+    en: {
+      title: "Photo Metadata For Real Estate",
+      desc: "Why real estate agents and property sellers should remove photo metadata before listing properties online. Protect your clients and listings from privacy risks.",
+    },
+    ru: {
+      title: "Метаданные фото для недвижимости",
+      desc: "Почему риелторам и продавцам жилья стоит удалять метаданные из фото перед публикацией объявлений. Защитите клиентов и объекты от рисков утечки.",
+    },
+  },
+  "/blog/protect-your-location-in-photos/": {
+    en: {
+      title: "Protect Your Location in Photos: A Complete GPS Privacy Guide",
+      desc: "Learn how to disable GPS tagging on your phone, remove existing location data from photos, and share images safely without revealing where you live or travel.",
+    },
+    ru: {
+      title: "Защита местоположения в фото: гайд по GPS-приватности",
+      desc: "Узнайте, как отключить GPS-метки на телефоне, удалить геоданные из фото и безопасно делиться снимками, не раскрывая, где вы живёте или путешествуете.",
+    },
+  },
+  "/blog/remove-gps-coordinates-from-images/": {
+    en: {
+      title: "Remove GPS Coordinates From Images",
+      desc: "Step-by-step guide to removing GPS coordinates from your photos. Learn how geotags get embedded, how to view them, and how to strip them before sharing.",
+    },
+    ru: {
+      title: "Как удалить GPS-координаты из изображений",
+      desc: "Пошаговое руководство по удалению GPS-координат из фото: как встраиваются геометки, как их посмотреть и как безопасно удалить перед публикацией.",
+    },
+  },
+  "/blog/remove-metadata-before-email/": {
+    en: {
+      title: "Remove Metadata Before Sending Photos By Email",
+      desc: "Email attachments often retain full EXIF metadata including GPS coordinates. Learn how to strip metadata from photos before emailing to protect your privacy.",
+    },
+    ru: {
+      title: "Удаление метаданных перед отправкой фото по email",
+      desc: "Вложения в письмах часто сохраняют полные данные EXIF, включая GPS-координаты. Узнайте, как очистить метаданные из фото перед отправкой письма.",
+    },
+  },
+  "/blog/remove-metadata-before-facebook-uploads/": {
+    en: {
+      title: "Remove Metadata Before Facebook Uploads",
+      desc: "Understand how Facebook handles photo metadata, what data it collects, and how to protect your privacy by removing EXIF data before uploading.",
+    },
+    ru: {
+      title: "Удаление метаданных перед загрузкой в Facebook*",
+      desc: "Узнайте, как Facebook* работает с метаданными фото, какие данные собирает и как защитить приватность, удалив данные EXIF перед загрузкой на платформу.",
+    },
+  },
+  "/blog/remove-metadata-before-instagram/": {
+    en: {
+      title: "Remove Metadata Before Instagram",
+      desc: "Learn how Instagram handles photo metadata, what data survives upload, and how to remove EXIF data before posting to protect your privacy.",
+    },
+    ru: {
+      title: "Удаление метаданных перед публикацией в Instagram*",
+      desc: "Узнайте, как Instagram* обрабатывает метаданные фото, какие данные переживают загрузку, и как удалить данные EXIF перед публикацией ради приватности.",
+    },
+  },
+  "/blog/remove-metadata-before-linkedin/": {
+    en: {
+      title: "Remove Metadata Before Uploading To LinkedIn",
+      desc: "Professional photos on LinkedIn carry hidden metadata. Learn how LinkedIn handles photo EXIF data and how to protect your privacy when sharing professional images.",
+    },
+    ru: {
+      title: "Удаление метаданных перед загрузкой в LinkedIn",
+      desc: "Профессиональные фото в LinkedIn содержат скрытые метаданные. Узнайте, как платформа обрабатывает данные EXIF и как защитить приватность снимков.",
+    },
+  },
+  "/blog/remove-metadata-before-reddit/": {
+    en: {
+      title: "Remove Metadata Before Uploading To Reddit",
+      desc: "Learn how Reddit handles photo metadata, what data survives upload, and how to remove EXIF data before posting to protect your privacy on Reddit.",
+    },
+    ru: {
+      title: "Удаление метаданных перед загрузкой на Reddit",
+      desc: "Узнайте, как Reddit работает с метаданными фото, какие данные переживают загрузку, и как удалить данные EXIF перед публикацией для защиты приватности.",
+    },
+  },
+  "/blog/remove-metadata-before-selling-products/": {
+    en: {
+      title: "Remove Metadata Before Selling Products Online",
+      desc: "Learn why product photos need metadata removed before listing on eBay, Craigslist, and other marketplaces. Protect your home address and personal information.",
+    },
+    ru: {
+      title: "Удаление метаданных перед продажей товаров онлайн",
+      desc: "Узнайте, почему с товарных фото нужно удалять метаданные перед публикацией на eBay, Craigslist и других площадках. Защитите домашний адрес и данные.",
+    },
+  },
+  "/blog/remove-metadata-before-snapchat/": {
+    en: {
+      title: "Remove Metadata Before Snapchat",
+      desc: "Learn how Snapchat handles photo metadata, what data is stored even after viewing, and how to strip EXIF data before sharing to protect your privacy.",
+    },
+    ru: {
+      title: "Удаление метаданных перед публикацией в Snapchat",
+      desc: "Узнайте, как Snapchat хранит метаданные фото, какие данные остаются даже после просмотра, и как удалить данные EXIF перед отправкой изображений.",
+    },
+  },
+  "/blog/remove-metadata-before-telegram/": {
+    en: {
+      title: "Remove Metadata Before Telegram",
+      desc: "Understand how Telegram handles photo metadata, the risks of Secret Chats vs regular chats, and how to protect your privacy by stripping EXIF data.",
+    },
+    ru: {
+      title: "Удаление метаданных перед отправкой в Telegram",
+      desc: "Узнайте, как Telegram работает с метаданными фото, чем секретные чаты отличаются от обычных и как защитить вашу приватность, удалив данные EXIF.",
+    },
+  },
+  "/blog/remove-metadata-before-twitter/": {
+    en: {
+      title: "Remove Metadata Before Uploading To X",
+      desc: "Learn how X (formerly Twitter) handles photo metadata, what data survives upload, and how to strip EXIF data before posting to protect your privacy.",
+    },
+    ru: {
+      title: "Удаление метаданных перед загрузкой в X (Twitter)*",
+      desc: "Узнайте, как X (бывший Twitter)* работает с метаданными фото, какие данные переживают загрузку и как удалить данные EXIF перед публикацией ради приватности.",
+    },
+  },
+  "/blog/remove-metadata-before-whatsapp/": {
+    en: {
+      title: "Remove Metadata Before WhatsApp",
+      desc: "Learn how WhatsApp handles photo metadata, what data survives sharing, and how to strip EXIF data before sending images to protect your privacy.",
+    },
+    ru: {
+      title: "Удаление метаданных перед отправкой в WhatsApp",
+      desc: "Узнайте, как WhatsApp работает с метаданными фото, какие данные переживают пересылку, и как удалить данные EXIF перед отправкой изображений ради приватности.",
+    },
+  },
+  "/blog/remove-metadata-from-dslr-photos/": {
+    en: {
+      title: "Remove Metadata From DSLR Photos",
+      desc: "A camera-specific guide to removing metadata from DSLR and mirrorless camera photos. Learn how professional cameras embed detailed EXIF data and how to strip it.",
+    },
+    ru: {
+      title: "Как удалить метаданные из фото с DSLR",
+      desc: "Гайд по удалению метаданных из фото зеркальных и беззеркальных камер: как профессиональные камеры встраивают данные EXIF и как очистить их перед публикацией.",
+    },
+  },
+  "/blog/remove-metadata-from-gopro-photos/": {
+    en: {
+      title: "Remove Metadata From GoPro Photos",
+      desc: "GoPro cameras record extensive metadata including GPS, gyroscope data, and telemetry. Learn what your action camera captures and how to strip it before sharing.",
+    },
+    ru: {
+      title: "Как удалить метаданные из фото GoPro",
+      desc: "Камеры GoPro записывают много метаданных: GPS, данные гироскопа и телеметрию. Узнайте, что фиксирует ваша экшн-камера, и как очистить данные.",
+    },
+  },
+  "/blog/remove-metadata-from-jpg-files/": {
+    en: {
+      title: "Remove Metadata From JPG Files",
+      desc: "Step-by-step guide to removing EXIF metadata from JPG and JPEG files. Learn how piexifjs processes JPG metadata and how to batch clean your photo collection.",
+    },
+    ru: {
+      title: "Как удалить метаданные из JPG-файлов",
+      desc: "Пошаговое руководство по удалению данных EXIF из файлов JPG и JPEG: как работает piexifjs и как пакетно очистить всю фотоколлекцию перед публикацией.",
+    },
+  },
+  "/blog/remove-metadata-from-pdfs/": {
+    en: {
+      title: "Remove Metadata From PDFs Online",
+      desc: "Learn how to remove metadata from PDF files to protect your privacy. Step-by-step guide to cleaning PDF documents.",
+    },
+    ru: {
+      title: "Удаление метаданных из PDF онлайн",
+      desc: "Узнайте, как удалить метаданные из файлов PDF онлайн и надёжно защитить свою приватность. Пошаговое руководство по очистке PDF-документов перед отправкой.",
+    },
+  },
+  "/blog/remove-metadata-from-png-files/": {
+    en: {
+      title: "Remove Metadata From PNG Files",
+      desc: "Learn how to remove metadata from PNG files. Understand PNG-specific chunks like tEXt, iTXt, and zTXt, and how PNG metadata differs from JPG.",
+    },
+    ru: {
+      title: "Как удалить метаданные из PNG-файлов",
+      desc: "Узнайте, как удалять метаданные из PNG-файлов: что представляют собой чанки tEXt, iTXt и zTXt, чем метаданные PNG отличаются от JPG и как их очистить.",
+    },
+  },
+  "/blog/remove-metadata-from-work-documents/": {
+    en: {
+      title: "Remove Metadata From Work Documents",
+      desc: "Corporate documents often contain hidden metadata that reveals author names, revision history, and internal details. Learn how to strip metadata from work documents.",
+    },
+    ru: {
+      title: "Удаление метаданных из рабочих документов",
+      desc: "В рабочих документах часто скрыты метаданные с именами авторов, историей правок и внутренними сведениями. Узнайте, как очистить такие файлы.",
+    },
+  },
+  "/blog/social-media-privacy-checklist/": {
+    en: {
+      title: "Social Media Privacy Checklist: What to Check Before You Post",
+      desc: "A complete pre-posting privacy checklist for sharing photos on social media. Learn what metadata, background details, and settings to review before hitting publish.",
+    },
+    ru: {
+      title: "Чек-лист приватности в соцсетях перед публикацией",
+      desc: "Полный чек-лист приватности перед публикацией фото в соцсетях: какие метаданные, детали фона и настройки проверить, прежде чем нажать «Опубликовать».",
+    },
+  },
+  "/blog/understanding-exif-metadata/": {
+    en: {
+      title: "Understanding EXIF Metadata",
+      desc: "A comprehensive technical explanation of EXIF metadata — what it is, how it's created, what each field means, and why it matters for your privacy.",
+    },
+    ru: {
+      title: "Что такое метаданные EXIF: полный разбор",
+      desc: "Подробный технический разбор метаданных EXIF: что это, как они создаются, что означает каждое поле и почему это важно для вашей приватности.",
+    },
+  },
+  "/blog/what-is-exif-data/": {
+    en: {
+      title: "What Is EXIF Data",
+      desc: "A beginner-friendly guide to EXIF data: what it is, how it gets into your photos, what information it contains, and why it matters for your privacy.",
+    },
+    ru: {
+      title: "Что такое данные EXIF: простое объяснение",
+      desc: "Гайд для новичков о данных EXIF: что это, как они попадают в ваши фото, какую информацию содержат и почему это важно для вашей приватности в интернете.",
+    },
+  },
+  "/blog/what-metadata-is-stored-in-photos/": {
+    en: {
+      title: "What Metadata Is Stored In Photos",
+      desc: "Discover what metadata is embedded in your photos — EXIF, IPTC, XMP data types, GPS coordinates, camera settings, and timestamps explained.",
+    },
+    ru: {
+      title: "Какие метаданные хранятся в фотографиях",
+      desc: "Узнайте, какие метаданные встроены в ваши фото: типы данных EXIF, IPTC и XMP, GPS-координаты, настройки камеры и метки времени — простым языком.",
+    },
+  },
+  "/blog/why-gps-metadata-is-dangerous/": {
+    en: {
+      title: "Why GPS Metadata Is Dangerous",
+      desc: "Learn why GPS metadata in photos poses serious privacy risks — from stalking and burglary to real-world exploitation cases. Protect your location today.",
+    },
+    ru: {
+      title: "Почему GPS-метаданные опасны для приватности",
+      desc: "Узнайте, почему GPS-метаданные в фото создают серьёзные риски — от слежки и кражи до реальных случаев мошенничества. Защитите своё местоположение.",
+    },
+  },
 };
 
 export const TRANSLATION_MAP: Record<string, string> = {
+  // Blog page text nodes (auto-generated). Spread first so existing
+  // hand-written entries below take precedence on key conflicts.
+  ...BLOG_TRANSLATIONS,
   // Navigation & General
   "Home": "Главная",
   "Tools": "Инструменты",
@@ -380,4 +895,12 @@ export const TRANSLATION_MAP: Record<string, string> = {
   "GPS Location": "GPS-локация",
   "No metadata detected": "Метаданные не обнаружены",
   "This file appears to be clean": "Этот файл чист от метаданных",
+  "Facebook and Instagram remove most EXIF data when you upload photos, but Twitter, Discord, and many messaging apps preserve metadata. Always assume your metadata is retained unless you verify otherwise.": "Facebook* и Instagram* удаляют большинство данных EXIF при загрузке фото, но Twitter*, Discord и многие мессенджеры сохраняют метаданные. Всегда считайте, что метаданные сохранены, пока не убедились в обратном.",
+  "Facebook and Instagram remove most EXIF data when photos are uploaded, though they may use metadata internally for features like location tagging and photo organization.": "Facebook* и Instagram* удаляют большинство данных EXIF при загрузке фото, хотя могут использовать метаданные внутри платформы для таких функций, как геометки и сортировка фотографий.",
+  "Twitter and Discord preserve metadata in uploaded images, meaning anyone who downloads your photos can access the original EXIF data including GPS coordinates and device information.": "Twitter* и Discord сохраняют метаданные в загруженных изображениях — любой, кто скачает ваши фото, получит доступ к исходным данным EXIF, включая GPS-координаты и сведения об устройстве.",
+  "Does Instagram remove photo metadata?": "Удаляет ли Instagram* метаданные с фото?",
+  "Instagram removes most EXIF data when you upload photos, but the platform may retain metadata in its own systems. Always remove metadata before uploading for complete privacy.": "Instagram* удаляет большинство данных EXIF при загрузке фото, но платформа может сохранять метаданные в собственных системах. Для полной приватности удаляйте метаданные перед загрузкой.",
+  "Does Twitter preserve photo metadata?": "Сохраняет ли Twitter* метаданные фотографий?",
+  "Yes, Twitter preserves metadata in uploaded images. Anyone who downloads your photos from Twitter can access the original EXIF data including GPS coordinates.": "Да, Twitter* сохраняет метаданные в загруженных изображениях. Любой, кто скачает ваши фото с Twitter*, получит доступ к исходным данным EXIF, включая GPS-координаты.",
+  "Facebook Pixel or Meta tracking": "Пиксель Facebook* или отслеживание от Meta*",
 };

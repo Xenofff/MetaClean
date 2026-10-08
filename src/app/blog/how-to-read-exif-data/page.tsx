@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/how-to-read-exif-data/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "How To Read EXIF Data",
-  description:
-    "Learn how to read and interpret EXIF metadata fields in your photos. Understand camera settings, GPS coordinates, timestamps, and other embedded data.",
+  title: metaRu?.title || "How To Read EXIF Data",
+  description: metaRu?.desc || "Learn how to read and interpret EXIF metadata fields in your photos. Understand camera settings, GPS coordinates, timestamps, and other embedded data.",
   keywords: [
-    "how to read EXIF data",
-    "EXIF data viewer",
-    "interpret photo metadata",
-    "understand EXIF fields",
-    "EXIF data tutorial",
+    "как читать данные EXIF",
+    "просмотрщик данных EXIF",
+    "понимание метаданных фото",
+    "разбор полей EXIF",
+    "урок по данным EXIF",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/how-to-read-exif-data/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "How To Read EXIF Data",
+    description: metaRu?.desc || "Learn how to read and interpret EXIF metadata fields in your photos. Understand camera settings, GPS coordinates, timestamps, and other embedded data.",
+    url: `${siteConfig.url}/blog/how-to-read-exif-data/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

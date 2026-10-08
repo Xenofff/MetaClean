@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/iphone-photo-metadata-explained/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "iPhone Photo Metadata Explained",
-  description:
-    "Learn what metadata your iPhone records in every photo, how GPS coordinates are embedded, and how to disable location tracking on iOS.",
+  title: metaRu?.title || "iPhone Photo Metadata Explained",
+  description: metaRu?.desc || "Learn what metadata your iPhone records in every photo, how GPS coordinates are embedded, and how to disable location tracking on iOS.",
   keywords: [
-    "iPhone metadata",
-    "iOS photo data",
-    "iPhone EXIF data",
-    "iPhone photo privacy",
-    "disable GPS iPhone",
+    "метаданные iPhone",
+    "данные фото iOS",
+    "данные EXIF iPhone",
+    "приватность фото iPhone",
+    "отключить GPS на iPhone",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/iphone-photo-metadata-explained/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "iPhone Photo Metadata Explained",
+    description: metaRu?.desc || "Learn what metadata your iPhone records in every photo, how GPS coordinates are embedded, and how to disable location tracking on iOS.",
+    url: `${siteConfig.url}/blog/iphone-photo-metadata-explained/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

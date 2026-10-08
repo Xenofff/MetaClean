@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/best-metadata-viewer-tools/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Best Metadata Viewer Tools",
-  description:
-    "Compare the best metadata viewer tools for photos and documents. Find the right tool to check EXIF data, PDF properties, and hidden file information.",
+  title: metaRu?.title || "Best Metadata Viewer Tools",
+  description: metaRu?.desc || "Compare the best metadata viewer tools for photos and documents. Find the right tool to check EXIF data, PDF properties, and hidden file information.",
   keywords: [
-    "best metadata viewer",
-    "metadata viewer tools",
-    "EXIF viewer comparison",
-    "check file metadata",
-    "metadata analysis tools",
+    "лучший просмотрщик метаданных",
+    "инструменты просмотра метаданных",
+    "сравнение просмотрщиков EXIF",
+    "проверка метаданных файла",
+    "инструменты анализа метаданных",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/best-metadata-viewer-tools/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Best Metadata Viewer Tools",
+    description: metaRu?.desc || "Compare the best metadata viewer tools for photos and documents. Find the right tool to check EXIF data, PDF properties, and hidden file information.",
+    url: `${siteConfig.url}/blog/best-metadata-viewer-tools/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

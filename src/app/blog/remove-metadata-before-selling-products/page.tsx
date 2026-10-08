@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/remove-metadata-before-selling-products/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Remove Metadata Before Selling Products Online",
-  description:
-    "Learn why product photos need metadata removed before listing on eBay, Craigslist, and other marketplaces. Protect your home address and personal information.",
+  title: metaRu?.title || "Remove Metadata Before Selling Products Online",
+  description: metaRu?.desc || "Learn why product photos need metadata removed before listing on eBay, Craigslist, and other marketplaces. Protect your home address and personal information.",
   keywords: [
-    "product photo privacy",
-    "remove metadata eBay",
-    "online selling privacy",
-    "marketplace photo safety",
-    "Craigslist photo privacy",
+    "приватность товарных фото",
+    "удаление метаданных для eBay",
+    "приватность онлайн-продаж",
+    "безопасность фото на маркетплейсах",
+    "приватность фото Craigslist",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/remove-metadata-before-selling-products/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Remove Metadata Before Selling Products Online",
+    description: metaRu?.desc || "Learn why product photos need metadata removed before listing on eBay, Craigslist, and other marketplaces. Protect your home address and personal information.",
+    url: `${siteConfig.url}/blog/remove-metadata-before-selling-products/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

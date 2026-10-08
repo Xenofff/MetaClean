@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/how-companies-track-metadata/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "How Companies Track Metadata",
-  description:
-    "Companies collect and analyze metadata from your photos, documents, and devices. Learn how corporate metadata tracking works and how to protect yourself.",
+  title: metaRu?.title || "How Companies Track Metadata",
+  description: metaRu?.desc || "Companies collect and analyze metadata from your photos, documents, and devices. Learn how corporate metadata tracking works and how to protect yourself.",
   keywords: [
-    "company metadata tracking",
-    "corporate metadata collection",
-    "metadata surveillance",
-    "corporate data collection",
-    "metadata privacy companies",
+    "отслеживание метаданных компаниями",
+    "сбор метаданных бизнесом",
+    "слежка за метаданными",
+    "сбор данных компаниями",
+    "приватность метаданных",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/how-companies-track-metadata/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "How Companies Track Metadata",
+    description: metaRu?.desc || "Companies collect and analyze metadata from your photos, documents, and devices. Learn how corporate metadata tracking works and how to protect yourself.",
+    url: `${siteConfig.url}/blog/how-companies-track-metadata/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/remove-metadata-before-facebook-uploads/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Remove Metadata Before Facebook Uploads",
-  description:
-    "Understand how Facebook handles photo metadata, what data it collects, and how to protect your privacy by removing EXIF data before uploading.",
+  title: metaRu?.title || "Remove Metadata Before Facebook Uploads",
+  description: metaRu?.desc || "Understand how Facebook handles photo metadata, what data it collects, and how to protect your privacy by removing EXIF data before uploading.",
   keywords: [
-    "Facebook metadata",
-    "Facebook photo privacy",
-    "remove EXIF Facebook",
-    "Facebook EXIF data",
-    "Facebook privacy protection",
+    "метаданные Facebook",
+    "приватность фото Facebook",
+    "удалить EXIF для Facebook",
+    "данные EXIF Facebook",
+    "защита приватности Facebook",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/remove-metadata-before-facebook-uploads/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Remove Metadata Before Facebook Uploads",
+    description: metaRu?.desc || "Understand how Facebook handles photo metadata, what data it collects, and how to protect your privacy by removing EXIF data before uploading.",
+    url: `${siteConfig.url}/blog/remove-metadata-before-facebook-uploads/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

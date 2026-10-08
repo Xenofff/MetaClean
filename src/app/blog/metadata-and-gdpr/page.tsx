@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/metadata-and-gdpr/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Metadata And GDPR",
-  description:
-    "GDPR classifies metadata as personal data in many contexts. Learn how European privacy regulations apply to photo and document metadata and how to stay compliant.",
+  title: metaRu?.title || "Metadata And GDPR",
+  description: metaRu?.desc || "GDPR classifies metadata as personal data in many contexts. Learn how European privacy regulations apply to photo and document metadata and how to stay compliant.",
   keywords: [
-    "metadata GDPR",
-    "GDPR personal data",
-    "European privacy metadata",
-    "GDPR photo metadata",
-    "metadata compliance",
+    "метаданные и GDPR",
+    "персональные данные GDPR",
+    "европейская приватность и метаданные",
+    "GDPR и метаданные фото",
+    "соблюдение GDPR",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/metadata-and-gdpr/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Metadata And GDPR",
+    description: metaRu?.desc || "GDPR classifies metadata as personal data in many contexts. Learn how European privacy regulations apply to photo and document metadata and how to stay compliant.",
+    url: `${siteConfig.url}/blog/metadata-and-gdpr/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/how-investigators-use-metadata/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "How Investigators Use Metadata",
-  description:
-    "Digital forensics investigators use metadata to track suspects, verify evidence, and reconstruct events. Learn how metadata analysis works in investigations.",
+  title: metaRu?.title || "How Investigators Use Metadata",
+  description: metaRu?.desc || "Digital forensics investigators use metadata to track suspects, verify evidence, and reconstruct events. Learn how metadata analysis works in investigations.",
   keywords: [
-    "digital forensics metadata",
-    "investigator metadata analysis",
-    "metadata evidence",
-    "EXIF forensics",
-    "metadata investigation",
+    "метаданные цифровой криминалистики",
+    "анализ метаданных следователями",
+    "метаданные как улики",
+    "криминалистика EXIF",
+    "расследование по метаданным",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/how-investigators-use-metadata/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "How Investigators Use Metadata",
+    description: metaRu?.desc || "Digital forensics investigators use metadata to track suspects, verify evidence, and reconstruct events. Learn how metadata analysis works in investigations.",
+    url: `${siteConfig.url}/blog/how-investigators-use-metadata/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

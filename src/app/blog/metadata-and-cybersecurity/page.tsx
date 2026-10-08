@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/metadata-and-cybersecurity/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Metadata And Cybersecurity",
-  description:
-    "Metadata creates cybersecurity risks from reconnaissance to data breaches. Learn how attackers exploit metadata and how to defend against these threats.",
+  title: metaRu?.title || "Metadata And Cybersecurity",
+  description: metaRu?.desc || "Metadata creates cybersecurity risks from reconnaissance to data breaches. Learn how attackers exploit metadata and how to defend against these threats.",
   keywords: [
-    "metadata cybersecurity",
-    "metadata security risks",
-    "EXIF security threat",
-    "metadata attack vector",
-    "digital security metadata",
+    "метаданные и кибербезопасность",
+    "риски метаданных",
+    "угроза безопасности EXIF",
+    "вектор атаки через метаданные",
+    "цифровая безопасность и метаданные",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/metadata-and-cybersecurity/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Metadata And Cybersecurity",
+    description: metaRu?.desc || "Metadata creates cybersecurity risks from reconnaissance to data breaches. Learn how attackers exploit metadata and how to defend against these threats.",
+    url: `${siteConfig.url}/blog/metadata-and-cybersecurity/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

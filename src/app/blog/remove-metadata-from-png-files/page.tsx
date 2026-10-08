@@ -3,13 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/remove-metadata-from-png-files/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Remove Metadata From PNG Files",
-  description: "Learn how to remove metadata from PNG files. Understand PNG-specific chunks like tEXt, iTXt, and zTXt, and how PNG metadata differs from JPG.",
-  keywords: ["remove metadata from PNG", "PNG metadata remover", "clean PNG files", "PNG EXIF data", "strip PNG metadata"],
+  title: metaRu?.title || "Remove Metadata From PNG Files",
+  description: metaRu?.desc || "Learn how to remove metadata from PNG files. Understand PNG-specific chunks like tEXt, iTXt, and zTXt, and how PNG metadata differs from JPG.",
+  keywords: [
+    "удалить метаданные из PNG",
+    "удаление метаданных PNG",
+    "очистка файлов PNG",
+    "данные EXIF в PNG",
+    "очистка метаданных PNG",
+  ],
   alternates: {
     canonical: `${siteConfig.url}/blog/remove-metadata-from-png-files/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Remove Metadata From PNG Files",
+    description: metaRu?.desc || "Learn how to remove metadata from PNG files. Understand PNG-specific chunks like tEXt, iTXt, and zTXt, and how PNG metadata differs from JPG.",
+    url: `${siteConfig.url}/blog/remove-metadata-from-png-files/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

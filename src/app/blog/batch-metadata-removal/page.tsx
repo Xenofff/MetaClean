@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/batch-metadata-removal/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Batch Metadata Removal: Clean Multiple Files at Once",
-  description:
-    "Learn how to remove metadata from multiple photos simultaneously with batch processing. Save time cleaning hundreds of files before sharing or publishing.",
+  title: metaRu?.title || "Batch Metadata Removal: Clean Multiple Files at Once",
+  description: metaRu?.desc || "Learn how to remove metadata from multiple photos simultaneously with batch processing. Save time cleaning hundreds of files before sharing or publishing.",
   keywords: [
-    "batch metadata removal",
-    "bulk metadata cleaner",
-    "multiple file metadata removal",
-    "batch EXIF removal",
-    "clean multiple photos",
+    "пакетное удаление метаданных",
+    "массовая очистка метаданных",
+    "удалить метаданные с нескольких файлов",
+    "пакетное удаление EXIF",
+    "очистить несколько фото",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/batch-metadata-removal/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Batch Metadata Removal: Clean Multiple Files at Once",
+    description: metaRu?.desc || "Learn how to remove metadata from multiple photos simultaneously with batch processing. Save time cleaning hundreds of files before sharing or publishing.",
+    url: `${siteConfig.url}/blog/batch-metadata-removal/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

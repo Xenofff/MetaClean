@@ -3,14 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
 
+
+const metaRu = PAGE_METADATA["/blog/best-metadata-cleaner-tools/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Best Free Metadata Cleaner Tools",
-  description: "Compare the best free tools for removing metadata from photos, PDFs, and text files. Find the right tool for your privacy needs.",
-  keywords: ["metadata cleaner", "EXIF remover", "free privacy tools", "metadata removal tool"],
+  title: metaRu?.title || "Best Free Metadata Cleaner Tools",
+  description: metaRu?.desc || "Compare the best free tools for removing metadata from photos, PDFs, and text files. Find the right tool for your privacy needs.",
+  keywords: [
+    "очистка метаданных",
+    "удаление EXIF",
+    "бесплатные инструменты приватности",
+    "инструмент для удаления метаданных",
+  ],
   alternates: {
     canonical: `${siteConfig.url}/blog/best-metadata-cleaner-tools/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Best Free Metadata Cleaner Tools",
+    description: metaRu?.desc || "Compare the best free tools for removing metadata from photos, PDFs, and text files. Find the right tool for your privacy needs.",
+    url: `${siteConfig.url}/blog/best-metadata-cleaner-tools/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/social-media-privacy-checklist/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Social Media Privacy Checklist: What to Check Before You Post",
-  description:
-    "A complete pre-posting privacy checklist for sharing photos on social media. Learn what metadata, background details, and settings to review before hitting publish.",
+  title: metaRu?.title || "Social Media Privacy Checklist: What to Check Before You Post",
+  description: metaRu?.desc || "A complete pre-posting privacy checklist for sharing photos on social media. Learn what metadata, background details, and settings to review before hitting publish.",
   keywords: [
-    "social media privacy checklist",
-    "before you post checklist",
-    "photo sharing privacy",
-    "social media photo safety",
-    "privacy checklist photos",
+    "чек-лист приватности соцсетей",
+    "чек-лист перед публикацией",
+    "приватность шаринга фото",
+    "безопасность фото в соцсетях",
+    "чек-лист приватности для фото",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/social-media-privacy-checklist/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Social Media Privacy Checklist: What to Check Before You Post",
+    description: metaRu?.desc || "A complete pre-posting privacy checklist for sharing photos on social media. Learn what metadata, background details, and settings to review before hitting publish.",
+    url: `${siteConfig.url}/blog/social-media-privacy-checklist/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/why-gps-metadata-is-dangerous/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Why GPS Metadata Is Dangerous",
-  description:
-    "Learn why GPS metadata in photos poses serious privacy risks — from stalking and burglary to real-world exploitation cases. Protect your location today.",
+  title: metaRu?.title || "Why GPS Metadata Is Dangerous",
+  description: metaRu?.desc || "Learn why GPS metadata in photos poses serious privacy risks — from stalking and burglary to real-world exploitation cases. Protect your location today.",
   keywords: [
-    "GPS metadata danger",
-    "location privacy risk",
-    "GPS tracking",
-    "photo GPS privacy",
-    "location data exposure",
+    "опасность GPS-метаданных",
+    "риск приватности местоположения",
+    "отслеживание GPS",
+    "приватность GPS в фото",
+    "утечка данных о местоположении",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/why-gps-metadata-is-dangerous/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Why GPS Metadata Is Dangerous",
+    description: metaRu?.desc || "Learn why GPS metadata in photos poses serious privacy risks — from stalking and burglary to real-world exploitation cases. Protect your location today.",
+    url: `${siteConfig.url}/blog/why-gps-metadata-is-dangerous/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

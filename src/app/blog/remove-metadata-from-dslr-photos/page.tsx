@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/remove-metadata-from-dslr-photos/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Remove Metadata From DSLR Photos",
-  description:
-    "A camera-specific guide to removing metadata from DSLR and mirrorless camera photos. Learn how professional cameras embed detailed EXIF data and how to strip it.",
+  title: metaRu?.title || "Remove Metadata From DSLR Photos",
+  description: metaRu?.desc || "A camera-specific guide to removing metadata from DSLR and mirrorless camera photos. Learn how professional cameras embed detailed EXIF data and how to strip it.",
   keywords: [
-    "remove metadata DSLR",
-    "DSLR photo privacy",
-    "mirrorless camera metadata",
-    "Canon metadata removal",
-    "Nikon EXIF strip",
+    "удаление метаданных DSLR",
+    "приватность фото с DSLR",
+    "метаданные беззеркальных камер",
+    "удаление метаданных Canon",
+    "очистка EXIF Nikon",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/remove-metadata-from-dslr-photos/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Remove Metadata From DSLR Photos",
+    description: metaRu?.desc || "A camera-specific guide to removing metadata from DSLR and mirrorless camera photos. Learn how professional cameras embed detailed EXIF data and how to strip it.",
+    url: `${siteConfig.url}/blog/remove-metadata-from-dslr-photos/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

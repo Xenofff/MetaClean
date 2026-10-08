@@ -92,6 +92,12 @@ export default function Footer() {
           </div>
         </div>
 
+        {lang === "ru" && (
+          <p className="mt-8 border-t border-border pt-6 text-xs leading-relaxed text-muted-foreground" data-no-translate>
+            {t("footer.brand_note")}
+          </p>
+        )}
+
         <div className="mt-8 border-t border-border pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
             {t("footer.rights", { year: new Date().getFullYear() })}

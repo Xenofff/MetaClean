@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/can-metadata-reveal-home-address/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Can Metadata Reveal Your Home Address",
-  description:
-    "GPS coordinates in photos can pinpoint your exact home address. Learn how metadata exposes your location and how to protect yourself from location tracking.",
+  title: metaRu?.title || "Can Metadata Reveal Your Home Address",
+  description: metaRu?.desc || "GPS coordinates in photos can pinpoint your exact home address. Learn how metadata exposes your location and how to protect yourself from location tracking.",
   keywords: [
-    "metadata home address",
-    "GPS photo location",
-    "photo reveals home address",
-    "EXIF location data",
-    "metadata location privacy",
+    "метаданные домашний адрес",
+    "GPS-координаты в фото",
+    "фото раскрывает адрес",
+    "данные EXIF о местоположении",
+    "приватность геоданных",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/can-metadata-reveal-home-address/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Can Metadata Reveal Your Home Address",
+    description: metaRu?.desc || "GPS coordinates in photos can pinpoint your exact home address. Learn how metadata exposes your location and how to protect yourself from location tracking.",
+    url: `${siteConfig.url}/blog/can-metadata-reveal-home-address/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

@@ -3,13 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/complete-photo-privacy-guide/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Complete Photo Privacy Guide",
-  description: "Master photo privacy with our comprehensive guide. Learn to remove metadata, configure platform settings, and develop safe sharing habits to protect your personal information.",
-  keywords: ["photo privacy guide", "protect photo privacy", "online photo safety", "photo sharing safety", "digital privacy tips"],
+  title: metaRu?.title || "Complete Photo Privacy Guide",
+  description: metaRu?.desc || "Master photo privacy with our comprehensive guide. Learn to remove metadata, configure platform settings, and develop safe sharing habits to protect your personal information.",
+  keywords: [
+    "гайд по приватности фото",
+    "защита приватности фото",
+    "безопасность фото в интернете",
+    "безопасный шаринг фото",
+    "советы по цифровой приватности",
+  ],
   alternates: {
     canonical: `${siteConfig.url}/blog/complete-photo-privacy-guide/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Complete Photo Privacy Guide",
+    description: metaRu?.desc || "Master photo privacy with our comprehensive guide. Learn to remove metadata, configure platform settings, and develop safe sharing habits to protect your personal information.",
+    url: `${siteConfig.url}/blog/complete-photo-privacy-guide/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

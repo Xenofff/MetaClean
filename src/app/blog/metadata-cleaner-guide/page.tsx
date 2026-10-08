@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/metadata-cleaner-guide/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Metadata Cleaner Guide",
-  description:
-    "Complete tutorial for all MetaClean tools. Learn how to remove metadata from photos, PDFs, and text files with step-by-step instructions and tips.",
+  title: metaRu?.title || "Metadata Cleaner Guide",
+  description: metaRu?.desc || "Complete tutorial for all MetaClean tools. Learn how to remove metadata from photos, PDFs, and text files with step-by-step instructions and tips.",
   keywords: [
-    "metadata cleaner guide",
-    "MetaClean tutorial",
-    "how to use MetaClean",
-    "remove metadata tutorial",
-    "EXIF remover guide",
+    "гайд по очистке метаданных",
+    "урок MetaClean",
+    "как пользоваться MetaClean",
+    "гайд по удалению метаданных",
+    "гайд по удалению EXIF",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/metadata-cleaner-guide/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Metadata Cleaner Guide",
+    description: metaRu?.desc || "Complete tutorial for all MetaClean tools. Learn how to remove metadata from photos, PDFs, and text files with step-by-step instructions and tips.",
+    url: `${siteConfig.url}/blog/metadata-cleaner-guide/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/remove-metadata-before-snapchat/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Remove Metadata Before Snapchat",
-  description:
-    "Learn how Snapchat handles photo metadata, what data is stored even after viewing, and how to strip EXIF data before sharing to protect your privacy.",
+  title: metaRu?.title || "Remove Metadata Before Snapchat",
+  description: metaRu?.desc || "Learn how Snapchat handles photo metadata, what data is stored even after viewing, and how to strip EXIF data before sharing to protect your privacy.",
   keywords: [
-    "Snapchat metadata",
-    "Snapchat photo privacy",
-    "remove EXIF Snapchat",
-    "Snapchat EXIF data",
-    "Snapchat privacy tips",
+    "метаданные Snapchat",
+    "приватность фото Snapchat",
+    "удалить EXIF для Snapchat",
+    "данные EXIF Snapchat",
+    "советы по приватности Snapchat",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/remove-metadata-before-snapchat/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Remove Metadata Before Snapchat",
+    description: metaRu?.desc || "Learn how Snapchat handles photo metadata, what data is stored even after viewing, and how to strip EXIF data before sharing to protect your privacy.",
+    url: `${siteConfig.url}/blog/remove-metadata-before-snapchat/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

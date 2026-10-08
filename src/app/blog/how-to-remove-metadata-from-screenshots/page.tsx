@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/how-to-remove-metadata-from-screenshots/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "How To Remove Metadata From Screenshots",
-  description:
-    "Screenshots often contain hidden metadata including device info, timestamps, and app data. Learn how to clean screenshots before sharing to protect your privacy.",
+  title: metaRu?.title || "How To Remove Metadata From Screenshots",
+  description: metaRu?.desc || "Screenshots often contain hidden metadata including device info, timestamps, and app data. Learn how to clean screenshots before sharing to protect your privacy.",
   keywords: [
-    "remove metadata from screenshots",
-    "screenshot metadata",
-    "clean screenshot privacy",
-    "screenshot EXIF data",
-    "remove screenshot metadata",
+    "удалить метаданные со скриншотов",
+    "метаданные скриншота",
+    "очистка скриншота для приватности",
+    "данные EXIF скриншота",
+    "удалить метаданные скриншота",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/how-to-remove-metadata-from-screenshots/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "How To Remove Metadata From Screenshots",
+    description: metaRu?.desc || "Screenshots often contain hidden metadata including device info, timestamps, and app data. Learn how to clean screenshots before sharing to protect your privacy.",
+    url: `${siteConfig.url}/blog/how-to-remove-metadata-from-screenshots/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

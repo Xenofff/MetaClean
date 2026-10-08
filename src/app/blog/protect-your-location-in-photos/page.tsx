@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/protect-your-location-in-photos/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Protect Your Location in Photos: A Complete GPS Privacy Guide",
-  description:
-    "Learn how to disable GPS tagging on your phone, remove existing location data from photos, and share images safely without revealing where you live or travel.",
+  title: metaRu?.title || "Protect Your Location in Photos: A Complete GPS Privacy Guide",
+  description: metaRu?.desc || "Learn how to disable GPS tagging on your phone, remove existing location data from photos, and share images safely without revealing where you live or travel.",
   keywords: [
-    "protect location in photos",
-    "GPS privacy guide",
-    "location safety photos",
-    "remove GPS from photos",
-    "photo location privacy",
+    "защита местоположения в фото",
+    "гайд по GPS-приватности",
+    "безопасность локации в фото",
+    "удалить GPS из фото",
+    "приватность геометок",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/protect-your-location-in-photos/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Protect Your Location in Photos: A Complete GPS Privacy Guide",
+    description: metaRu?.desc || "Learn how to disable GPS tagging on your phone, remove existing location data from photos, and share images safely without revealing where you live or travel.",
+    url: `${siteConfig.url}/blog/protect-your-location-in-photos/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

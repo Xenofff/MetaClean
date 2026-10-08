@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/photo-metadata-for-ecommerce/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Photo Metadata For Ecommerce",
-  description:
-    "Why ecommerce sellers should remove photo metadata from product images. Protect your supply chain, supplier relationships, and pricing strategies.",
+  title: metaRu?.title || "Photo Metadata For Ecommerce",
+  description: metaRu?.desc || "Why ecommerce sellers should remove photo metadata from product images. Protect your supply chain, supplier relationships, and pricing strategies.",
   keywords: [
-    "ecommerce photo metadata",
-    "product photo privacy",
-    "remove metadata ecommerce",
-    "eBay photo metadata",
-    "Amazon product photo privacy",
+    "метаданные фото для ecommerce",
+    "приватность товарных фото",
+    "удаление метаданных для маркетплейсов",
+    "метаданные фото eBay",
+    "приватность фото на Amazon",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/photo-metadata-for-ecommerce/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Photo Metadata For Ecommerce",
+    description: metaRu?.desc || "Why ecommerce sellers should remove photo metadata from product images. Protect your supply chain, supplier relationships, and pricing strategies.",
+    url: `${siteConfig.url}/blog/photo-metadata-for-ecommerce/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

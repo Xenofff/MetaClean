@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/remove-metadata-from-work-documents/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Remove Metadata From Work Documents",
-  description:
-    "Corporate documents often contain hidden metadata that reveals author names, revision history, and internal details. Learn how to strip metadata from work documents.",
+  title: metaRu?.title || "Remove Metadata From Work Documents",
+  description: metaRu?.desc || "Corporate documents often contain hidden metadata that reveals author names, revision history, and internal details. Learn how to strip metadata from work documents.",
   keywords: [
-    "work document metadata",
-    "corporate document privacy",
-    "remove metadata documents",
-    "PDF metadata corporate",
-    "document privacy business",
+    "метаданные рабочих документов",
+    "приватность корпоративных документов",
+    "удаление метаданных из документов",
+    "метаданные PDF для бизнеса",
+    "приватность документов в бизнесе",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/remove-metadata-from-work-documents/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Remove Metadata From Work Documents",
+    description: metaRu?.desc || "Corporate documents often contain hidden metadata that reveals author names, revision history, and internal details. Learn how to strip metadata from work documents.",
+    url: `${siteConfig.url}/blog/remove-metadata-from-work-documents/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

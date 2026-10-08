@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/photo-metadata-for-real-estate/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Photo Metadata For Real Estate",
-  description:
-    "Why real estate agents and property sellers should remove photo metadata before listing properties online. Protect your clients and listings from privacy risks.",
+  title: metaRu?.title || "Photo Metadata For Real Estate",
+  description: metaRu?.desc || "Why real estate agents and property sellers should remove photo metadata before listing properties online. Protect your clients and listings from privacy risks.",
   keywords: [
-    "real estate photo metadata",
-    "property listing privacy",
-    "remove metadata real estate",
-    "MLS photo privacy",
-    "real estate photography privacy",
+    "метаданные фото недвижимости",
+    "приватность объявлений",
+    "удаление метаданных для риелторов",
+    "приватность фото MLS",
+    "приватность фото недвижимости",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/photo-metadata-for-real-estate/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Photo Metadata For Real Estate",
+    description: metaRu?.desc || "Why real estate agents and property sellers should remove photo metadata before listing properties online. Protect your clients and listings from privacy risks.",
+    url: `${siteConfig.url}/blog/photo-metadata-for-real-estate/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

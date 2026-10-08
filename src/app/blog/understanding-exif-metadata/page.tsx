@@ -3,13 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/understanding-exif-metadata/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Understanding EXIF Metadata",
-  description: "A comprehensive technical explanation of EXIF metadata — what it is, how it's created, what each field means, and why it matters for your privacy.",
-  keywords: ["EXIF metadata explained", "what is EXIF data", "EXIF tutorial", "EXIF format", "photo metadata explained"],
+  title: metaRu?.title || "Understanding EXIF Metadata",
+  description: metaRu?.desc || "A comprehensive technical explanation of EXIF metadata — what it is, how it's created, what each field means, and why it matters for your privacy.",
+  keywords: [
+    "метаданные EXIF объяснение",
+    "что такое данные EXIF",
+    "урок по EXIF",
+    "формат EXIF",
+    "объяснение метаданных фото",
+  ],
   alternates: {
     canonical: `${siteConfig.url}/blog/understanding-exif-metadata/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Understanding EXIF Metadata",
+    description: metaRu?.desc || "A comprehensive technical explanation of EXIF metadata — what it is, how it's created, what each field means, and why it matters for your privacy.",
+    url: `${siteConfig.url}/blog/understanding-exif-metadata/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

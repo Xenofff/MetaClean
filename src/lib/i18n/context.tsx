@@ -100,11 +100,30 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     const pathname = (currentPath || window.location.pathname).replace(/\/index\.html$/, "");
     const normalized = pathname.endsWith("/") ? pathname : pathname + "/";
     const meta = PAGE_METADATA[normalized];
-    if (meta && meta[lang]) {
-      document.title = meta[lang].title;
-      const descEl = document.querySelector('meta[name="description"]');
-      if (descEl) descEl.setAttribute("content", meta[lang].desc);
-    }
+    const applyMeta = () => {
+      if (!meta || !meta[lang]) return;
+      // React/Next can re-render head tags after this effect (SSR values),
+      // so re-apply only when something drifted back.
+      if (document.title !== meta[lang].title) {
+        document.title = meta[lang].title;
+      }
+      document.querySelectorAll('meta[name="description"]').forEach((el) => {
+        if (el.getAttribute("content") !== meta[lang].desc) {
+          el.setAttribute("content", meta[lang].desc);
+        }
+      });
+    };
+    applyMeta();
+    // Keep title/description in the active language for as long as this
+    // page/language is mounted (cleared on unmount or language switch).
+    const headObserver = new MutationObserver(applyMeta);
+    headObserver.observe(document.head, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ["content"],
+    });
 
     // Translate input & textarea placeholders
     const inputElements = document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
@@ -159,10 +178,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
     if (lang === "ru") {
       nodesToTranslate.forEach(({ node, text }) => {
-        if (!originalTexts.current.has(node)) {
+        // Only remember/replace nodes we actually translate. React-driven
+        // components already render localized text themselves; recording
+        // those as "originals" would overwrite English on switch back.
+        if (map[text] && !originalTexts.current.has(node)) {
           originalTexts.current.set(node, node.nodeValue || "");
-        }
-        if (map[text]) {
           node.nodeValue = node.nodeValue!.replace(text, map[text]);
         }
       });
@@ -175,6 +195,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       });
       originalTexts.current.clear();
     }
+
+    return () => headObserver.disconnect();
   }, [lang, mounted, currentPath]);
 
   return (

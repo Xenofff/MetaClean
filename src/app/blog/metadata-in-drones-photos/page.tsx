@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/metadata-in-drones-photos/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Metadata In Drone Photos",
-  description:
-    "Drone photos contain extensive metadata including GPS, altitude, gimbal data, and flight information. Learn what your drone records and how to protect your privacy.",
+  title: metaRu?.title || "Metadata In Drone Photos",
+  description: metaRu?.desc || "Drone photos contain extensive metadata including GPS, altitude, gimbal data, and flight information. Learn what your drone records and how to protect your privacy.",
   keywords: [
-    "drone photo metadata",
-    "drone privacy",
-    "drone EXIF data",
-    "drone GPS metadata",
-    "aerial photography privacy",
+    "метаданные фото с дрона",
+    "приватность дрона",
+    "данные EXIF дрона",
+    "GPS-метаданные дрона",
+    "приватность аэросъёмки",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/metadata-in-drones-photos/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Metadata In Drone Photos",
+    description: metaRu?.desc || "Drone photos contain extensive metadata including GPS, altitude, gimbal data, and flight information. Learn what your drone records and how to protect your privacy.",
+    url: `${siteConfig.url}/blog/metadata-in-drones-photos/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

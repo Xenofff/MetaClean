@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/metadata-and-privacy-laws/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Metadata And Privacy Laws",
-  description:
-    "Privacy regulations worldwide address metadata differently. Learn how global privacy laws treat photo and document metadata and what compliance means for individuals and businesses.",
+  title: metaRu?.title || "Metadata And Privacy Laws",
+  description: metaRu?.desc || "Privacy regulations worldwide address metadata differently. Learn how global privacy laws treat photo and document metadata and what compliance means for individuals and businesses.",
   keywords: [
-    "privacy laws metadata",
-    "metadata regulations",
-    "global privacy metadata",
-    "CCPA metadata",
-    "metadata legal compliance",
+    "законы о приватности и метаданные",
+    "регулирование метаданных",
+    "международная приватность метаданных",
+    "метаданные и CCPA",
+    "юридическое соответствие метаданных",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/metadata-and-privacy-laws/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Metadata And Privacy Laws",
+    description: metaRu?.desc || "Privacy regulations worldwide address metadata differently. Learn how global privacy laws treat photo and document metadata and what compliance means for individuals and businesses.",
+    url: `${siteConfig.url}/blog/metadata-and-privacy-laws/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

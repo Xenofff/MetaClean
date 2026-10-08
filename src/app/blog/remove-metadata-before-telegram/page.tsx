@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/remove-metadata-before-telegram/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Remove Metadata Before Telegram",
-  description:
-    "Understand how Telegram handles photo metadata, the risks of Secret Chats vs regular chats, and how to protect your privacy by stripping EXIF data.",
+  title: metaRu?.title || "Remove Metadata Before Telegram",
+  description: metaRu?.desc || "Understand how Telegram handles photo metadata, the risks of Secret Chats vs regular chats, and how to protect your privacy by stripping EXIF data.",
   keywords: [
-    "Telegram metadata",
-    "Telegram photo privacy",
-    "remove EXIF Telegram",
-    "Telegram EXIF data",
-    "Telegram privacy tips",
+    "метаданные Telegram",
+    "приватность фото Telegram",
+    "удалить EXIF для Telegram",
+    "данные EXIF Telegram",
+    "советы по приватности Telegram",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/remove-metadata-before-telegram/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Remove Metadata Before Telegram",
+    description: metaRu?.desc || "Understand how Telegram handles photo metadata, the risks of Secret Chats vs regular chats, and how to protect your privacy by stripping EXIF data.",
+    url: `${siteConfig.url}/blog/remove-metadata-before-telegram/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

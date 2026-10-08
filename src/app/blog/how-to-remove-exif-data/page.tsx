@@ -3,13 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/how-to-remove-exif-data/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "How to Remove EXIF Data From Photos",
-  description: "Learn how to remove hidden EXIF metadata from your photos before sharing online. Step-by-step guide to protect your privacy.",
-  keywords: ["remove EXIF data", "EXIF remover", "photo metadata", "privacy protection", "image metadata"],
+  title: metaRu?.title || "How to Remove EXIF Data From Photos",
+  description: metaRu?.desc || "Learn how to remove hidden EXIF metadata from your photos before sharing online. Step-by-step guide to protect your privacy.",
+  keywords: [
+    "удалить данные EXIF",
+    "удаление EXIF",
+    "метаданные фото",
+    "защита приватности",
+    "метаданные изображений",
+  ],
   alternates: {
     canonical: `${siteConfig.url}/blog/how-to-remove-exif-data/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "How to Remove EXIF Data From Photos",
+    description: metaRu?.desc || "Learn how to remove hidden EXIF metadata from your photos before sharing online. Step-by-step guide to protect your privacy.",
+    url: `${siteConfig.url}/blog/how-to-remove-exif-data/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

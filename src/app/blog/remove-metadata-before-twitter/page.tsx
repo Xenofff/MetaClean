@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/remove-metadata-before-twitter/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Remove Metadata Before Uploading To X",
-  description:
-    "Learn how X (formerly Twitter) handles photo metadata, what data survives upload, and how to strip EXIF data before posting to protect your privacy.",
+  title: metaRu?.title || "Remove Metadata Before Uploading To X",
+  description: metaRu?.desc || "Learn how X (formerly Twitter) handles photo metadata, what data survives upload, and how to strip EXIF data before posting to protect your privacy.",
   keywords: [
-    "X metadata privacy",
-    "Twitter photo metadata",
-    "remove EXIF X",
-    "Twitter EXIF data",
-    "X privacy tips photos",
+    "приватность метаданных X",
+    "метаданные фото Twitter",
+    "удалить EXIF для X",
+    "данные EXIF Twitter",
+    "советы по приватности X",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/remove-metadata-before-twitter/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Remove Metadata Before Uploading To X",
+    description: metaRu?.desc || "Learn how X (formerly Twitter) handles photo metadata, what data survives upload, and how to strip EXIF data before posting to protect your privacy.",
+    url: `${siteConfig.url}/blog/remove-metadata-before-twitter/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

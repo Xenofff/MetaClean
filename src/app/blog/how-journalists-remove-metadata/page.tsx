@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/how-journalists-remove-metadata/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "How Journalists Remove Metadata",
-  description:
-    "Journalists face unique metadata risks when protecting sources. Learn how media professionals strip EXIF data from photos and documents to safeguard confidential information.",
+  title: metaRu?.title || "How Journalists Remove Metadata",
+  description: metaRu?.desc || "Journalists face unique metadata risks when protecting sources. Learn how media professionals strip EXIF data from photos and documents to safeguard confidential information.",
   keywords: [
-    "journalist metadata removal",
-    "source protection metadata",
-    "media privacy metadata",
-    "journalist photo privacy",
-    "press freedom metadata",
+    "удаление метаданных журналистами",
+    "защита источника метаданными",
+    "приватность медиа",
+    "приватность фото журналиста",
+    "свобода прессы и метаданные",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/how-journalists-remove-metadata/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "How Journalists Remove Metadata",
+    description: metaRu?.desc || "Journalists face unique metadata risks when protecting sources. Learn how media professionals strip EXIF data from photos and documents to safeguard confidential information.",
+    url: `${siteConfig.url}/blog/how-journalists-remove-metadata/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

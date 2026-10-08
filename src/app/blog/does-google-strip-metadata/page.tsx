@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/does-google-strip-metadata/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Does Google Strip Metadata",
-  description:
-    "Learn how Google handles photo metadata across Google Photos, Gmail, Drive, and Android. Understand what metadata Google strips and what it retains.",
+  title: metaRu?.title || "Does Google Strip Metadata",
+  description: metaRu?.desc || "Learn how Google handles photo metadata across Google Photos, Gmail, Drive, and Android. Understand what metadata Google strips and what it retains.",
   keywords: [
-    "Google photo metadata",
-    "Google Photos privacy",
-    "Android EXIF data",
-    "Google metadata stripping",
-    "Google Drive photo privacy",
+    "метаданные Google",
+    "приватность Google Photos",
+    "данные EXIF Android",
+    "удаление метаданных Google",
+    "приватность фото Google Drive",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/does-google-strip-metadata/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Does Google Strip Metadata",
+    description: metaRu?.desc || "Learn how Google handles photo metadata across Google Photos, Gmail, Drive, and Android. Understand what metadata Google strips and what it retains.",
+    url: `${siteConfig.url}/blog/does-google-strip-metadata/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

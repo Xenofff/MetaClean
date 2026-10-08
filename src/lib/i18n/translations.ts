@@ -311,6 +311,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     "footer.gps_risks": "Риски GPS-данных",
     "footer.no_data": "Без сбора данных",
     "footer.open_source": "Открытый исходный код",
+  "footer.brand_note": "* Упоминания Facebook и Instagram: принадлежат Meta Platforms, Inc., признанной экстремистской организацией и запрещённой на территории РФ. X (Twitter) заблокирован на территории РФ. Упоминания приведены исключительно в информационных целях.",
     "footer.rights": "© {year} MetaClean. Все права защищены.",
 
     // Home Page

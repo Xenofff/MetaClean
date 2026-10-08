@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/what-is-exif-data/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "What Is EXIF Data",
-  description:
-    "A beginner-friendly guide to EXIF data: what it is, how it gets into your photos, what information it contains, and why it matters for your privacy.",
+  title: metaRu?.title || "What Is EXIF Data",
+  description: metaRu?.desc || "A beginner-friendly guide to EXIF data: what it is, how it gets into your photos, what information it contains, and why it matters for your privacy.",
   keywords: [
-    "what is EXIF data",
-    "EXIF data explained",
-    "photo metadata guide",
-    "EXIF beginner guide",
-    "understanding EXIF data",
+    "что такое данные EXIF",
+    "объяснение данных EXIF",
+    "гайд по метаданным фото",
+    "гайд по EXIF для новичков",
+    "понимание данных EXIF",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/what-is-exif-data/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "What Is EXIF Data",
+    description: metaRu?.desc || "A beginner-friendly guide to EXIF data: what it is, how it gets into your photos, what information it contains, and why it matters for your privacy.",
+    url: `${siteConfig.url}/blog/what-is-exif-data/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

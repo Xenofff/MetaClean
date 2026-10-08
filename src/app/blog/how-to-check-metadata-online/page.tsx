@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/how-to-check-metadata-online/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "How To Check Metadata Online",
-  description:
-    "Learn how to view and analyze metadata in your photos and documents using online tools. Check what hidden data your files reveal before sharing them.",
+  title: metaRu?.title || "How To Check Metadata Online",
+  description: metaRu?.desc || "Learn how to view and analyze metadata in your photos and documents using online tools. Check what hidden data your files reveal before sharing them.",
   keywords: [
-    "check metadata online",
-    "view photo metadata",
-    "online EXIF viewer",
-    "check file metadata",
-    "metadata viewer tool",
+    "проверка метаданных онлайн",
+    "просмотр метаданных фото",
+    "онлайн просмотр EXIF",
+    "проверка метаданных файла",
+    "инструмент просмотра метаданных",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/how-to-check-metadata-online/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "How To Check Metadata Online",
+    description: metaRu?.desc || "Learn how to view and analyze metadata in your photos and documents using online tools. Check what hidden data your files reveal before sharing them.",
+    url: `${siteConfig.url}/blog/how-to-check-metadata-online/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

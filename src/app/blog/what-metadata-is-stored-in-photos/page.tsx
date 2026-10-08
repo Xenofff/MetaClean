@@ -3,21 +3,30 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/what-metadata-is-stored-in-photos/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "What Metadata Is Stored In Photos",
-  description:
-    "Discover what metadata is embedded in your photos — EXIF, IPTC, XMP data types, GPS coordinates, camera settings, and timestamps explained.",
+  title: metaRu?.title || "What Metadata Is Stored In Photos",
+  description: metaRu?.desc || "Discover what metadata is embedded in your photos — EXIF, IPTC, XMP data types, GPS coordinates, camera settings, and timestamps explained.",
   keywords: [
-    "photo metadata",
-    "what metadata is in photos",
-    "EXIF data explained",
-    "IPTC metadata",
-    "XMP data",
-    "image metadata types",
+    "метаданные фото",
+    "какие метаданные в фото",
+    "объяснение данных EXIF",
+    "метаданные IPTC",
+    "данные XMP",
+    "типы метаданных изображений",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/what-metadata-is-stored-in-photos/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "What Metadata Is Stored In Photos",
+    description: metaRu?.desc || "Discover what metadata is embedded in your photos — EXIF, IPTC, XMP data types, GPS coordinates, camera settings, and timestamps explained.",
+    url: `${siteConfig.url}/blog/what-metadata-is-stored-in-photos/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

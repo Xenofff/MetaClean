@@ -3,13 +3,28 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/photo-metadata-danger/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Why Photo Metadata Can Be Dangerous",
-  description: "Learn how metadata in your photos can expose sensitive information and put your privacy at risk.",
-  keywords: ["photo metadata danger", "EXIF privacy risk", "photo privacy", "metadata security"],
+  title: metaRu?.title || "Why Photo Metadata Can Be Dangerous",
+  description: metaRu?.desc || "Learn how metadata in your photos can expose sensitive information and put your privacy at risk.",
+  keywords: [
+    "опасность метаданных фото",
+    "риск приватности EXIF",
+    "приватность фотографий",
+    "безопасность метаданных",
+  ],
   alternates: {
     canonical: `${siteConfig.url}/blog/photo-metadata-danger/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Why Photo Metadata Can Be Dangerous",
+    description: metaRu?.desc || "Learn how metadata in your photos can expose sensitive information and put your privacy at risk.",
+    url: `${siteConfig.url}/blog/photo-metadata-danger/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

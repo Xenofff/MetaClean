@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/exif-viewer-guide/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "EXIF Viewer Guide",
-  description:
-    "How to use the MetaClean EXIF Viewer to inspect photo metadata. Learn to read EXIF categories, search fields, and interpret results for better privacy.",
+  title: metaRu?.title || "EXIF Viewer Guide",
+  description: metaRu?.desc || "How to use the MetaClean EXIF Viewer to inspect photo metadata. Learn to read EXIF categories, search fields, and interpret results for better privacy.",
   keywords: [
-    "EXIF viewer guide",
-    "how to view EXIF data",
-    "metadata inspector",
-    "EXIF data reader",
-    "photo metadata viewer",
+    "гайд просмотра EXIF",
+    "как посмотреть данные EXIF",
+    "просмотрщик метаданных",
+    "чтение данных EXIF",
+    "просмотрщик метаданных фото",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/exif-viewer-guide/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "EXIF Viewer Guide",
+    description: metaRu?.desc || "How to use the MetaClean EXIF Viewer to inspect photo metadata. Learn to read EXIF categories, search fields, and interpret results for better privacy.",
+    url: `${siteConfig.url}/blog/exif-viewer-guide/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

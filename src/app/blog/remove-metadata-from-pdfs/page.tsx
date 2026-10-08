@@ -3,13 +3,28 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/remove-metadata-from-pdfs/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Remove Metadata From PDFs Online",
-  description: "Learn how to remove metadata from PDF files to protect your privacy. Step-by-step guide to cleaning PDF documents.",
-  keywords: ["remove PDF metadata", "PDF privacy", "PDF metadata cleaner", "document privacy"],
+  title: metaRu?.title || "Remove Metadata From PDFs Online",
+  description: metaRu?.desc || "Learn how to remove metadata from PDF files to protect your privacy. Step-by-step guide to cleaning PDF documents.",
+  keywords: [
+    "удаление метаданных PDF",
+    "приватность PDF",
+    "очистка метаданных PDF",
+    "приватность документов",
+  ],
   alternates: {
     canonical: `${siteConfig.url}/blog/remove-metadata-from-pdfs/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Remove Metadata From PDFs Online",
+    description: metaRu?.desc || "Learn how to remove metadata from PDF files to protect your privacy. Step-by-step guide to cleaning PDF documents.",
+    url: `${siteConfig.url}/blog/remove-metadata-from-pdfs/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

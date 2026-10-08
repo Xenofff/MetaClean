@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/does-apple-strip-metadata/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Does Apple Strip Metadata",
-  description:
-    "Find out how Apple handles photo metadata across iPhone, iPad, and Mac. Learn what metadata Apple strips, what it keeps, and what you can do to protect your privacy.",
+  title: metaRu?.title || "Does Apple Strip Metadata",
+  description: metaRu?.desc || "Find out how Apple handles photo metadata across iPhone, iPad, and Mac. Learn what metadata Apple strips, what it keeps, and what you can do to protect your privacy.",
   keywords: [
-    "Apple photo metadata",
-    "iPhone metadata stripping",
-    "Apple privacy",
-    "iOS EXIF data",
-    "Apple iCloud metadata",
+    "метаданные Apple",
+    "удаление метаданных iPhone",
+    "приватность Apple",
+    "данные EXIF iOS",
+    "метаданные iCloud",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/does-apple-strip-metadata/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Does Apple Strip Metadata",
+    description: metaRu?.desc || "Find out how Apple handles photo metadata across iPhone, iPad, and Mac. Learn what metadata Apple strips, what it keeps, and what you can do to protect your privacy.",
+    url: `${siteConfig.url}/blog/does-apple-strip-metadata/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

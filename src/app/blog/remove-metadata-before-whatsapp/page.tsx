@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/remove-metadata-before-whatsapp/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Remove Metadata Before WhatsApp",
-  description:
-    "Learn how WhatsApp handles photo metadata, what data survives sharing, and how to strip EXIF data before sending images to protect your privacy.",
+  title: metaRu?.title || "Remove Metadata Before WhatsApp",
+  description: metaRu?.desc || "Learn how WhatsApp handles photo metadata, what data survives sharing, and how to strip EXIF data before sending images to protect your privacy.",
   keywords: [
-    "WhatsApp metadata",
-    "WhatsApp photo privacy",
-    "remove EXIF WhatsApp",
-    "WhatsApp EXIF data",
-    "WhatsApp privacy tips",
+    "метаданные WhatsApp",
+    "приватность фото WhatsApp",
+    "удалить EXIF для WhatsApp",
+    "данные EXIF WhatsApp",
+    "советы по приватности WhatsApp",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/remove-metadata-before-whatsapp/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Remove Metadata Before WhatsApp",
+    description: metaRu?.desc || "Learn how WhatsApp handles photo metadata, what data survives sharing, and how to strip EXIF data before sending images to protect your privacy.",
+    url: `${siteConfig.url}/blog/remove-metadata-before-whatsapp/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

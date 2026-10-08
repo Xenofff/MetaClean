@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/remove-metadata-before-linkedin/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Remove Metadata Before Uploading To LinkedIn",
-  description:
-    "Professional photos on LinkedIn carry hidden metadata. Learn how LinkedIn handles photo EXIF data and how to protect your privacy when sharing professional images.",
+  title: metaRu?.title || "Remove Metadata Before Uploading To LinkedIn",
+  description: metaRu?.desc || "Professional photos on LinkedIn carry hidden metadata. Learn how LinkedIn handles photo EXIF data and how to protect your privacy when sharing professional images.",
   keywords: [
-    "LinkedIn metadata privacy",
-    "LinkedIn photo EXIF",
-    "remove EXIF LinkedIn",
-    "LinkedIn professional photo privacy",
-    "LinkedIn data protection",
+    "приватность метаданных LinkedIn",
+    "EXIF фото LinkedIn",
+    "удалить EXIF для LinkedIn",
+    "приватность деловых фото",
+    "защита данных LinkedIn",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/remove-metadata-before-linkedin/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Remove Metadata Before Uploading To LinkedIn",
+    description: metaRu?.desc || "Professional photos on LinkedIn carry hidden metadata. Learn how LinkedIn handles photo EXIF data and how to protect your privacy when sharing professional images.",
+    url: `${siteConfig.url}/blog/remove-metadata-before-linkedin/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

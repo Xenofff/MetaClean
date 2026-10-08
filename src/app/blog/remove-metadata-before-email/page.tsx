@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/remove-metadata-before-email/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Remove Metadata Before Sending Photos By Email",
-  description:
-    "Email attachments often retain full EXIF metadata including GPS coordinates. Learn how to strip metadata from photos before emailing to protect your privacy.",
+  title: metaRu?.title || "Remove Metadata Before Sending Photos By Email",
+  description: metaRu?.desc || "Email attachments often retain full EXIF metadata including GPS coordinates. Learn how to strip metadata from photos before emailing to protect your privacy.",
   keywords: [
-    "email photo metadata",
-    "remove EXIF email",
-    "email attachment privacy",
-    "strip metadata email photos",
-    "email photo safety",
+    "метаданные фото в email",
+    "удалить EXIF перед письмом",
+    "приватность вложений писем",
+    "очистка метаданных для email",
+    "безопасность фото в письмах",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/remove-metadata-before-email/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Remove Metadata Before Sending Photos By Email",
+    description: metaRu?.desc || "Email attachments often retain full EXIF metadata including GPS coordinates. Learn how to strip metadata from photos before emailing to protect your privacy.",
+    url: `${siteConfig.url}/blog/remove-metadata-before-email/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

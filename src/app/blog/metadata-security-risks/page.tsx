@@ -3,13 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/metadata-security-risks/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Metadata Security Risks",
-  description: "Discover the real security risks of metadata — from stalking and burglary to social engineering and identity theft. Learn how hidden data in your files can be exploited.",
-  keywords: ["metadata security risks", "hidden data threats", "metadata vulnerability", "EXIF privacy risk", "digital privacy threats"],
+  title: metaRu?.title || "Metadata Security Risks",
+  description: metaRu?.desc || "Discover the real security risks of metadata — from stalking and burglary to social engineering and identity theft. Learn how hidden data in your files can be exploited.",
+  keywords: [
+    "риски безопасности метаданных",
+    "угрозы скрытых данных",
+    "уязвимости метаданных",
+    "риск приватности EXIF",
+    "угрозы цифровой приватности",
+  ],
   alternates: {
     canonical: `${siteConfig.url}/blog/metadata-security-risks/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Metadata Security Risks",
+    description: metaRu?.desc || "Discover the real security risks of metadata — from stalking and burglary to social engineering and identity theft. Learn how hidden data in your files can be exploited.",
+    url: `${siteConfig.url}/blog/metadata-security-risks/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

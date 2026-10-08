@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/android-photo-metadata-explained/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Android Photo Metadata Explained",
-  description:
-    "Discover what metadata Android phones record in photos, how Samsung, Google Pixel, and other manufacturers handle location tags, and how to disable them.",
+  title: metaRu?.title || "Android Photo Metadata Explained",
+  description: metaRu?.desc || "Discover what metadata Android phones record in photos, how Samsung, Google Pixel, and other manufacturers handle location tags, and how to disable them.",
   keywords: [
-    "Android metadata",
-    "Android photo data",
-    "Samsung photo privacy",
-    "Android EXIF data",
-    "disable location tags Android",
+    "метаданные Android",
+    "данные фото на Android",
+    "приватность фото Samsung",
+    "данные EXIF Android",
+    "отключить геометки Android",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/android-photo-metadata-explained/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Android Photo Metadata Explained",
+    description: metaRu?.desc || "Discover what metadata Android phones record in photos, how Samsung, Google Pixel, and other manufacturers handle location tags, and how to disable them.",
+    url: `${siteConfig.url}/blog/android-photo-metadata-explained/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 

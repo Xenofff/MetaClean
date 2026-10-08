@@ -3,20 +3,29 @@ import JsonLd from "@/components/json-ld";
 import FAQSection from "@/components/faq-section";
 import { generateBreadcrumbSchema, generateFAQSchema, siteConfig } from "@/lib/schema";
 import type { Metadata } from "next";
+import { PAGE_METADATA } from "@/lib/i18n/dictionary";
+
+const metaRu = PAGE_METADATA["/blog/remove-metadata-before-instagram/"]?.ru;
 
 export const metadata: Metadata = {
-  title: "Remove Metadata Before Instagram",
-  description:
-    "Learn how Instagram handles photo metadata, what data survives upload, and how to remove EXIF data before posting to protect your privacy.",
+  title: metaRu?.title || "Remove Metadata Before Instagram",
+  description: metaRu?.desc || "Learn how Instagram handles photo metadata, what data survives upload, and how to remove EXIF data before posting to protect your privacy.",
   keywords: [
-    "Instagram metadata",
-    "Instagram photo privacy",
-    "remove EXIF Instagram",
-    "Instagram EXIF data",
-    "Instagram privacy tips",
+    "метаданные Instagram",
+    "приватность фото Instagram",
+    "удалить EXIF для Instagram",
+    "данные EXIF Instagram",
+    "советы по приватности Instagram",
   ],
   alternates: {
     canonical: `${siteConfig.url}/blog/remove-metadata-before-instagram/`,
+  },
+  openGraph: {
+    title: metaRu?.title || "Remove Metadata Before Instagram",
+    description: metaRu?.desc || "Learn how Instagram handles photo metadata, what data survives upload, and how to remove EXIF data before posting to protect your privacy.",
+    url: `${siteConfig.url}/blog/remove-metadata-before-instagram/`,
+    siteName: siteConfig.name,
+    locale: "ru_RU",
   },
 };
 
